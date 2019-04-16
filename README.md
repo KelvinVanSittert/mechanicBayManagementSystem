@@ -1,4 +1,4 @@
-# mechanicBayManagementSystem
+# Mechanic Bay Management System
 The Mechanic Bay Management System is a project designed to smoothline the process of storing, moving and analysing vehicles. 
 It has a easy to use gui that will show you what type of vehicles are booked, what bay they are booked in, the tools needed to fix the vehicle
 and what type of mechanic will have the skills to fix the vehicle.
