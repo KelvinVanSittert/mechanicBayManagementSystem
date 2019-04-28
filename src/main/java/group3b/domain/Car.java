@@ -27,6 +27,9 @@ public class Car {
         return licenseNumber;
     }
 
+    public void setName(String newName){
+        name = newName;
+    }
 
     public static class Builder{
 

@@ -27,6 +27,9 @@ public class Cleaner {
         return surname;
     }
 
+    public void setName(String newName){
+        name = newName;
+    }
 
     public static class Builder{
 

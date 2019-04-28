@@ -2,37 +2,45 @@ package group3b.domain;
 
 public class ParkingBay {
 
-    private String parkingName;
-    private String parkingId;
+    private String parkingBayName;
+    private String parkingBayId;
     private boolean full;
 
     private ParkingBay(){}
 
     private ParkingBay(Builder builder) {
-        this.parkingName = builder.parkingName;
-        this.parkingId = builder.parkingId;
+        this.parkingBayName = builder.parkingBayName;
+        this.parkingBayId = builder.parkingBayId;
         this.full = builder.full;
     }
 
-    public String getParkingName() {
-        return parkingName;
+    public String getName() {
+        return parkingBayName;
     }
 
     public boolean getFull() {
         return full;
     }
 
-    public String getParkingId() {
-        return parkingId;
+    public String getParkingBayId() {
+        return parkingBayId;
+    }
+
+    public void setName(String newName){
+        parkingBayName = newName;
+    }
+
+    public void isFull(boolean newFull){
+        full = newFull;
     }
 
     public static class Builder{
 
-        private String parkingName, parkingId;
+        private String parkingBayName, parkingBayId;
         private boolean full;
 
-        public Builder parkingName(String parkingName) {
-            this.parkingName = parkingName;
+        public Builder parkingBayName(String parkingBayName) {
+            this.parkingBayName = parkingBayName;
             return this;
         }
 
@@ -42,7 +50,7 @@ public class ParkingBay {
         }
 
         public Builder parkingId(String parkingId) {
-            this.parkingId = parkingId;
+            this.parkingBayId = parkingId;
             return this;
         }
 
@@ -54,6 +62,6 @@ public class ParkingBay {
 
     @Override
     public String toString() {
-        return " Parking Name : " + parkingName + "\n Parking ID : " + parkingId + "\n Is full? : " + full;
+        return " Parking Name : " + parkingBayName + "\n Parking ID : " + parkingBayId + "\n Is full? : " + full;
     }
 }
