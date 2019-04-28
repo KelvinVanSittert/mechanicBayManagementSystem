@@ -41,5 +41,4 @@ public class BayServiceImpl implements BayService {
         return this.repository.read(s);
     }
 
-
 }

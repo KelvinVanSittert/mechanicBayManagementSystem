@@ -34,6 +34,10 @@ public class BayRepositoryImpl implements BayRepository {
     @Override
     public Bay update(Bay bay) {
 
+        if (bays.contains((bay))){
+            Bay[] cloneOfBays = bays.toArray(new Bay[bays.size()]);
+            //TODO
+        }
         return bay;
     }
 

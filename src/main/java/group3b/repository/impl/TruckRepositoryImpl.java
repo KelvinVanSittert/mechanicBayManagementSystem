@@ -1,4 +1,71 @@
 package group3b.repository.impl;
 
-public class TruckRepositoryImpl {
+import group3b.domain.Truck;
+import group3b.repository.TruckRepository;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class TruckRepositoryImpl implements TruckRepository {
+
+    private static TruckRepositoryImpl repository = null;
+    private Set<Truck> trucks;
+
+    private TruckRepositoryImpl(){
+        this.trucks = new HashSet<>();
+    }
+
+    public static TruckRepositoryImpl getRepository(){
+        if (repository == null) repository = new TruckRepositoryImpl();
+        return repository;
+    }
+
+    @Override
+    public Set<Truck> getAll() {
+        return this.trucks;
+    }
+
+    @Override
+    public Truck create(Truck truck) {
+        this.trucks.add(truck);
+        return truck;
+    }
+
+    @Override
+    public Truck update(Truck truck) {
+
+        return truck;
+    }
+
+    @Override
+    public void delete(String truckId) {
+        Truck[] cloneOfTrucks = trucks.toArray(new Truck[trucks.size()]);
+        for (int i = 0; i<cloneOfTrucks.length;i++) {
+            if (cloneOfTrucks[i].getTruckId() == truckId) {
+                cloneOfTrucks[i] = null;
+            }
+        }
+        trucks.clear();
+
+        for (int j = 0; j<cloneOfTrucks.length;j++){
+            trucks.add(cloneOfTrucks[j]);
+        }
+
+    }
+
+    @Override
+    public Truck read(String truckId) {
+
+        Truck truckToReturn = null;
+
+        Truck[] cloneOfTrucks = trucks.toArray(new Truck[trucks.size()]);
+
+        for (int i = 0; i<cloneOfTrucks.length;i++) {
+            if (cloneOfTrucks[i].getTruckId() == truckId) {
+                truckToReturn = cloneOfTrucks[i];
+            }
+        }
+
+        return truckToReturn;
+    }
 }

@@ -1,4 +1,71 @@
 package group3b.repository.impl;
 
-public class InspectionBayRepositoryImpl {
+import group3b.domain.InspectionBay;
+import group3b.repository.InspectionBayRepository;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class InspectionBayRepositoryImpl implements InspectionBayRepository {
+
+    private static InspectionBayRepositoryImpl repository = null;
+    private Set<InspectionBay> inspectionBays;
+
+    private InspectionBayRepositoryImpl(){
+        this.inspectionBays = new HashSet<>();
+    }
+
+    public static InspectionBayRepositoryImpl getRepository(){
+        if (repository == null) repository = new InspectionBayRepositoryImpl();
+        return repository;
+    }
+
+    @Override
+    public Set<InspectionBay> getAll() {
+        return this.inspectionBays;
+    }
+
+    @Override
+    public InspectionBay create(InspectionBay inspectionBay) {
+        this.inspectionBays.add(inspectionBay);
+        return inspectionBay;
+    }
+
+    @Override
+    public InspectionBay update(InspectionBay inspectionBay) {
+
+        return inspectionBay;
+    }
+
+    @Override
+    public void delete(String inspectionBayId) {
+        InspectionBay[] cloneOfInspectionBays = inspectionBays.toArray(new InspectionBay[inspectionBays.size()]);
+        for (int i = 0; i<cloneOfInspectionBays.length;i++) {
+            if (cloneOfInspectionBays[i].getInspectionBayId() == inspectionBayId) {
+                cloneOfInspectionBays[i] = null;
+            }
+        }
+        inspectionBays.clear();
+
+        for (int j = 0; j<cloneOfInspectionBays.length;j++){
+            inspectionBays.add(cloneOfInspectionBays[j]);
+        }
+
+    }
+
+    @Override
+    public InspectionBay read(String inspectionBayId) {
+
+        InspectionBay inspectionBayToReturn = null;
+
+        InspectionBay[] cloneOfInspectionBays = inspectionBays.toArray(new InspectionBay[inspectionBays.size()]);
+
+        for (int i = 0; i<cloneOfInspectionBays.length;i++) {
+            if (cloneOfInspectionBays[i].getInspectionBayId() == inspectionBayId) {
+                inspectionBayToReturn = cloneOfInspectionBays[i];
+            }
+        }
+
+        return inspectionBayToReturn;
+    }
 }
