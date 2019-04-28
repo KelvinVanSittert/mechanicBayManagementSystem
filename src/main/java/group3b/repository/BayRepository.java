@@ -9,5 +9,4 @@ public interface BayRepository extends IRepository<Bay, String>{
 
     Set<Bay> getAll();
 
-
 }
