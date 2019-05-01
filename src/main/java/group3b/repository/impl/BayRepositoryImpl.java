@@ -46,15 +46,11 @@ public class BayRepositoryImpl implements BayRepository {
     Bay[] cloneOfBays = bays.toArray(new Bay[bays.size()]);
         for (int i = 0; i<cloneOfBays.length;i++) {
             if (cloneOfBays[i].getBayId() == bayId) {
-                cloneOfBays[i] = null;
+                if (bays.contains(cloneOfBays[i])){
+                    bays.remove(cloneOfBays[i]);
+                }
             }
         }
-            bays.clear();
-
-            for (int j = 0; j<cloneOfBays.length;j++){
-                bays.add(cloneOfBays[j]);
-            }
-
     }
 
     @Override

@@ -9,14 +9,14 @@ import java.util.Set;
 
 public class BayServiceImpl implements BayService {
 
-    private BayServiceImpl service = null;
+    private static BayServiceImpl service = null;
     private BayRepository repository;
 
     private BayServiceImpl(){
         this.repository = BayRepositoryImpl.getRepository();
     }
 
-    public BayService getService(){
+    public static BayServiceImpl getService(){
         if (service == null) service = new BayServiceImpl();
         return service;
     }
