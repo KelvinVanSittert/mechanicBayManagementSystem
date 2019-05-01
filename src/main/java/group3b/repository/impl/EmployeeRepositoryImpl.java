@@ -34,7 +34,13 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     @Override
     public Employee update(Employee employee) {
 
-        return employee;
+        Employee[] cloneOfEmployees = employees.toArray(new Employee[employees.size()]);
+        for (int i = 0; i<cloneOfEmployees.length;i++) {
+            if (cloneOfEmployees[i].equals(employee)) {
+                employees.remove(cloneOfEmployees[i]);
+            }
+        }
+        return create(employee);
     }
 
     @Override
@@ -42,15 +48,11 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
         Employee[] cloneOfEmployees = employees.toArray(new Employee[employees.size()]);
         for (int i = 0; i<cloneOfEmployees.length;i++) {
             if (cloneOfEmployees[i].getEmployeeId() == employeeId) {
-                cloneOfEmployees[i] = null;
+                if (employees.contains(cloneOfEmployees[i])){
+                    employees.remove(cloneOfEmployees[i]);
+                }
             }
         }
-        employees.clear();
-
-        for (int j = 0; j<cloneOfEmployees.length;j++){
-            employees.add(cloneOfEmployees[j]);
-        }
-
     }
 
     @Override

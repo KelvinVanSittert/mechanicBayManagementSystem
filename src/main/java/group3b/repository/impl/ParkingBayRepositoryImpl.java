@@ -34,7 +34,13 @@ public class ParkingBayRepositoryImpl implements ParkingBayRepository {
     @Override
     public ParkingBay update(ParkingBay parkingBay) {
 
-        return parkingBay;
+        ParkingBay[] cloneOfParkingBays = parkingBays.toArray(new ParkingBay[parkingBays.size()]);
+        for (int i = 0; i<cloneOfParkingBays.length;i++) {
+            if (cloneOfParkingBays[i].equals(parkingBay)) {
+                parkingBays.remove(cloneOfParkingBays[i]);
+            }
+        }
+        return create(parkingBay);
     }
 
     @Override
@@ -42,15 +48,11 @@ public class ParkingBayRepositoryImpl implements ParkingBayRepository {
         ParkingBay[] cloneOfParkingBays = parkingBays.toArray(new ParkingBay[parkingBays.size()]);
         for (int i = 0; i<cloneOfParkingBays.length;i++) {
             if (cloneOfParkingBays[i].getParkingBayId() == parkingBayId) {
-                cloneOfParkingBays[i] = null;
+                if (parkingBays.contains(cloneOfParkingBays[i])){
+                    parkingBays.remove(cloneOfParkingBays[i]);
+                }
             }
         }
-        parkingBays.clear();
-
-        for (int j = 0; j<cloneOfParkingBays.length;j++){
-            parkingBays.add(cloneOfParkingBays[j]);
-        }
-
     }
 
     @Override

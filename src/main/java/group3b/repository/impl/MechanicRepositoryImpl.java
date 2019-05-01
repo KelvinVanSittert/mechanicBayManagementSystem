@@ -34,7 +34,13 @@ public class MechanicRepositoryImpl implements MechanicRepository {
     @Override
     public Mechanic update(Mechanic mechanic) {
 
-        return mechanic;
+        Mechanic[] cloneOfMechanics = mechanics.toArray(new Mechanic[mechanics.size()]);
+        for (int i = 0; i<cloneOfMechanics.length;i++) {
+            if (cloneOfMechanics[i].equals(mechanic)) {
+                mechanics.remove(cloneOfMechanics[i]);
+            }
+        }
+        return create(mechanic);
     }
 
     @Override
@@ -42,15 +48,11 @@ public class MechanicRepositoryImpl implements MechanicRepository {
         Mechanic[] cloneOfMechanics = mechanics.toArray(new Mechanic[mechanics.size()]);
         for (int i = 0; i<cloneOfMechanics.length;i++) {
             if (cloneOfMechanics[i].getMechanicId() == mechanicId) {
-                cloneOfMechanics[i] = null;
+                if (mechanics.contains(cloneOfMechanics[i])){
+                    mechanics.remove(cloneOfMechanics[i]);
+                }
             }
         }
-        mechanics.clear();
-
-        for (int j = 0; j<cloneOfMechanics.length;j++){
-            mechanics.add(cloneOfMechanics[j]);
-        }
-
     }
 
     @Override

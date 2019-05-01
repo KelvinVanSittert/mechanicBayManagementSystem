@@ -34,7 +34,13 @@ public class TireRepositoryImpl implements TireRepository {
     @Override
     public Tire update(Tire tire) {
 
-        return tire;
+        Tire[] cloneOfTires = tires.toArray(new Tire[tires.size()]);
+        for (int i = 0; i<cloneOfTires.length;i++) {
+            if (cloneOfTires[i].equals(tire)) {
+                tires.remove(cloneOfTires[i]);
+            }
+        }
+        return create(tire);
     }
 
     @Override
@@ -42,15 +48,11 @@ public class TireRepositoryImpl implements TireRepository {
         Tire[] cloneOfTires = tires.toArray(new Tire[tires.size()]);
         for (int i = 0; i<cloneOfTires.length;i++) {
             if (cloneOfTires[i].getTireId() == tireId) {
-                cloneOfTires[i] = null;
+                if (tires.contains(cloneOfTires[i])){
+                    tires.remove(cloneOfTires[i]);
+                }
             }
         }
-        tires.clear();
-
-        for (int j = 0; j<cloneOfTires.length;j++){
-            tires.add(cloneOfTires[j]);
-        }
-
     }
 
     @Override

@@ -34,7 +34,13 @@ public class EngineRepositoryImpl implements EngineRepository {
     @Override
     public Engine update(Engine engine) {
 
-        return engine;
+        Engine[] cloneOfEngines = engines.toArray(new Engine[engines.size()]);
+        for (int i = 0; i<cloneOfEngines.length;i++) {
+            if (cloneOfEngines[i].equals(engine)) {
+                engines.remove(cloneOfEngines[i]);
+            }
+        }
+        return create(engine);
     }
 
     @Override
@@ -42,15 +48,11 @@ public class EngineRepositoryImpl implements EngineRepository {
         Engine[] cloneOfEngines = engines.toArray(new Engine[engines.size()]);
         for (int i = 0; i<cloneOfEngines.length;i++) {
             if (cloneOfEngines[i].getEngineId() == engineId) {
-                cloneOfEngines[i] = null;
+                if (engines.contains(cloneOfEngines[i])){
+                    engines.remove(cloneOfEngines[i]);
+                }
             }
         }
-        engines.clear();
-
-        for (int j = 0; j<cloneOfEngines.length;j++){
-            engines.add(cloneOfEngines[j]);
-        }
-
     }
 
     @Override

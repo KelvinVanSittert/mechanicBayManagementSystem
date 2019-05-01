@@ -34,7 +34,13 @@ public class SecretaryRepositoryImpl implements SecretaryRepository {
     @Override
     public Secretary update(Secretary secretary) {
 
-        return secretary;
+        Secretary[] cloneOfSecretarys = secretarys.toArray(new Secretary[secretarys.size()]);
+        for (int i = 0; i<cloneOfSecretarys.length;i++) {
+            if (cloneOfSecretarys[i].equals(secretary)) {
+                secretarys.remove(cloneOfSecretarys[i]);
+            }
+        }
+        return create(secretary);
     }
 
     @Override
@@ -42,15 +48,11 @@ public class SecretaryRepositoryImpl implements SecretaryRepository {
         Secretary[] cloneOfSecretarys = secretarys.toArray(new Secretary[secretarys.size()]);
         for (int i = 0; i<cloneOfSecretarys.length;i++) {
             if (cloneOfSecretarys[i].getSecretaryId() == secretaryId) {
-                cloneOfSecretarys[i] = null;
+                if (secretarys.contains(cloneOfSecretarys[i])){
+                    secretarys.remove(cloneOfSecretarys[i]);
+                }
             }
         }
-        secretarys.clear();
-
-        for (int j = 0; j<cloneOfSecretarys.length;j++){
-            secretarys.add(cloneOfSecretarys[j]);
-        }
-
     }
 
     @Override

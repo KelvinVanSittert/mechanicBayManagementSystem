@@ -34,7 +34,13 @@ public class MechanicBayRepositoryImpl implements MechanicBayRepository {
     @Override
     public MechanicBay update(MechanicBay mechanicBay) {
 
-        return mechanicBay;
+        MechanicBay[] cloneOfMechanicBays = mechanicBays.toArray(new MechanicBay[mechanicBays.size()]);
+        for (int i = 0; i<cloneOfMechanicBays.length;i++) {
+            if (cloneOfMechanicBays[i].equals(mechanicBay)) {
+                mechanicBays.remove(cloneOfMechanicBays[i]);
+            }
+        }
+        return create(mechanicBay);
     }
 
     @Override
@@ -42,15 +48,11 @@ public class MechanicBayRepositoryImpl implements MechanicBayRepository {
         MechanicBay[] cloneOfMechanicBays = mechanicBays.toArray(new MechanicBay[mechanicBays.size()]);
         for (int i = 0; i<cloneOfMechanicBays.length;i++) {
             if (cloneOfMechanicBays[i].getMechanicBayId() == mechanicBayId) {
-                cloneOfMechanicBays[i] = null;
+                if (mechanicBays.contains(cloneOfMechanicBays[i])){
+                    mechanicBays.remove(cloneOfMechanicBays[i]);
+                }
             }
         }
-        mechanicBays.clear();
-
-        for (int j = 0; j<cloneOfMechanicBays.length;j++){
-            mechanicBays.add(cloneOfMechanicBays[j]);
-        }
-
     }
 
     @Override

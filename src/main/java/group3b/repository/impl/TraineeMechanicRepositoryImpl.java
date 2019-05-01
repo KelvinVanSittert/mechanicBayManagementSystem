@@ -34,7 +34,13 @@ public class TraineeMechanicRepositoryImpl implements TraineeMechanicRepository 
     @Override
     public TraineeMechanic update(TraineeMechanic traineeMechanic) {
 
-        return traineeMechanic;
+        TraineeMechanic[] cloneOfTraineeMechanics = traineeMechanics.toArray(new TraineeMechanic[traineeMechanics.size()]);
+        for (int i = 0; i<cloneOfTraineeMechanics.length;i++) {
+            if (cloneOfTraineeMechanics[i].equals(traineeMechanic)) {
+                traineeMechanics.remove(cloneOfTraineeMechanics[i]);
+            }
+        }
+        return create(traineeMechanic);
     }
 
     @Override
@@ -42,15 +48,11 @@ public class TraineeMechanicRepositoryImpl implements TraineeMechanicRepository 
         TraineeMechanic[] cloneOfTraineeMechanics = traineeMechanics.toArray(new TraineeMechanic[traineeMechanics.size()]);
         for (int i = 0; i<cloneOfTraineeMechanics.length;i++) {
             if (cloneOfTraineeMechanics[i].getTraineeMechanicId() == traineeMechanicId) {
-                cloneOfTraineeMechanics[i] = null;
+                if (traineeMechanics.contains(cloneOfTraineeMechanics[i])){
+                    traineeMechanics.remove(cloneOfTraineeMechanics[i]);
+                }
             }
         }
-        traineeMechanics.clear();
-
-        for (int j = 0; j<cloneOfTraineeMechanics.length;j++){
-            traineeMechanics.add(cloneOfTraineeMechanics[j]);
-        }
-
     }
 
     @Override

@@ -34,7 +34,13 @@ public class ManagerRepositoryImpl implements ManagerRepository {
     @Override
     public Manager update(Manager manager) {
 
-        return manager;
+        Manager[] cloneOfManagers = managers.toArray(new Manager[managers.size()]);
+        for (int i = 0; i<cloneOfManagers.length;i++) {
+            if (cloneOfManagers[i].equals(manager)) {
+                managers.remove(cloneOfManagers[i]);
+            }
+        }
+        return create(manager);
     }
 
     @Override
@@ -42,15 +48,11 @@ public class ManagerRepositoryImpl implements ManagerRepository {
         Manager[] cloneOfManagers = managers.toArray(new Manager[managers.size()]);
         for (int i = 0; i<cloneOfManagers.length;i++) {
             if (cloneOfManagers[i].getManagerId() == managerId) {
-                cloneOfManagers[i] = null;
+                if (managers.contains(cloneOfManagers[i])){
+                    managers.remove(cloneOfManagers[i]);
+                }
             }
         }
-        managers.clear();
-
-        for (int j = 0; j<cloneOfManagers.length;j++){
-            managers.add(cloneOfManagers[j]);
-        }
-
     }
 
     @Override

@@ -34,7 +34,13 @@ public class TruckRepositoryImpl implements TruckRepository {
     @Override
     public Truck update(Truck truck) {
 
-        return truck;
+        Truck[] cloneOfTrucks = trucks.toArray(new Truck[trucks.size()]);
+        for (int i = 0; i<cloneOfTrucks.length;i++) {
+            if (cloneOfTrucks[i].equals(truck)) {
+                trucks.remove(cloneOfTrucks[i]);
+            }
+        }
+        return create(truck);
     }
 
     @Override
@@ -42,15 +48,11 @@ public class TruckRepositoryImpl implements TruckRepository {
         Truck[] cloneOfTrucks = trucks.toArray(new Truck[trucks.size()]);
         for (int i = 0; i<cloneOfTrucks.length;i++) {
             if (cloneOfTrucks[i].getTruckId() == truckId) {
-                cloneOfTrucks[i] = null;
+                if (trucks.contains(cloneOfTrucks[i])){
+                    trucks.remove(cloneOfTrucks[i]);
+                }
             }
         }
-        trucks.clear();
-
-        for (int j = 0; j<cloneOfTrucks.length;j++){
-            trucks.add(cloneOfTrucks[j]);
-        }
-
     }
 
     @Override

@@ -34,7 +34,13 @@ public class ToolRepositoryImpl implements ToolRepository {
     @Override
     public Tool update(Tool tool) {
 
-        return tool;
+        Tool[] cloneOfTools = tools.toArray(new Tool[tools.size()]);
+        for (int i = 0; i<cloneOfTools.length;i++) {
+            if (cloneOfTools[i].equals(tool)) {
+                tools.remove(cloneOfTools[i]);
+            }
+        }
+        return create(tool);
     }
 
     @Override
@@ -42,15 +48,11 @@ public class ToolRepositoryImpl implements ToolRepository {
         Tool[] cloneOfTools = tools.toArray(new Tool[tools.size()]);
         for (int i = 0; i<cloneOfTools.length;i++) {
             if (cloneOfTools[i].getToolId() == toolId) {
-                cloneOfTools[i] = null;
+                if (tools.contains(cloneOfTools[i])){
+                    tools.remove(cloneOfTools[i]);
+                }
             }
         }
-        tools.clear();
-
-        for (int j = 0; j<cloneOfTools.length;j++){
-            tools.add(cloneOfTools[j]);
-        }
-
     }
 
     @Override

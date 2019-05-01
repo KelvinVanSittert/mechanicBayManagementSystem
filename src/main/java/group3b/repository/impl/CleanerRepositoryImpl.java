@@ -34,7 +34,13 @@ public class CleanerRepositoryImpl implements CleanerRepository {
     @Override
     public Cleaner update(Cleaner cleaner) {
 
-        return cleaner;
+        Cleaner[] cloneOfCleaners = cleaners.toArray(new Cleaner[cleaners.size()]);
+        for (int i = 0; i<cloneOfCleaners.length;i++) {
+            if (cloneOfCleaners[i].equals(cleaner)) {
+                cleaners.remove(cloneOfCleaners[i]);
+            }
+        }
+        return create(cleaner);
     }
 
     @Override
@@ -42,15 +48,11 @@ public class CleanerRepositoryImpl implements CleanerRepository {
         Cleaner[] cloneOfCleaners = cleaners.toArray(new Cleaner[cleaners.size()]);
         for (int i = 0; i<cloneOfCleaners.length;i++) {
             if (cloneOfCleaners[i].getCleanerId() == cleanerId) {
-                cloneOfCleaners[i] = null;
+                if (cleaners.contains(cloneOfCleaners[i])){
+                    cleaners.remove(cloneOfCleaners[i]);
+                }
             }
         }
-        cleaners.clear();
-
-        for (int j = 0; j<cloneOfCleaners.length;j++){
-            cleaners.add(cloneOfCleaners[j]);
-        }
-
     }
 
     @Override

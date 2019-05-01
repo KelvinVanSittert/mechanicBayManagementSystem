@@ -34,7 +34,13 @@ public class DoorRepositoryImpl implements DoorRepository {
     @Override
     public Door update(Door door) {
 
-        return door;
+        Door[] cloneOfDoors = doors.toArray(new Door[doors.size()]);
+        for (int i = 0; i<cloneOfDoors.length;i++) {
+            if (cloneOfDoors[i].equals(door)) {
+                doors.remove(cloneOfDoors[i]);
+            }
+        }
+        return create(door);
     }
 
     @Override
@@ -42,15 +48,11 @@ public class DoorRepositoryImpl implements DoorRepository {
         Door[] cloneOfDoors = doors.toArray(new Door[doors.size()]);
         for (int i = 0; i<cloneOfDoors.length;i++) {
             if (cloneOfDoors[i].getDoorId() == doorId) {
-                cloneOfDoors[i] = null;
+                if (doors.contains(cloneOfDoors[i])){
+                    doors.remove(cloneOfDoors[i]);
+                }
             }
         }
-        doors.clear();
-
-        for (int j = 0; j<cloneOfDoors.length;j++){
-            doors.add(cloneOfDoors[j]);
-        }
-
     }
 
     @Override

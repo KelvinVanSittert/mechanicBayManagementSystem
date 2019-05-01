@@ -34,7 +34,13 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     @Override
     public Customer update(Customer customer) {
 
-        return customer;
+        Customer[] cloneOfCustomers = customers.toArray(new Customer[customers.size()]);
+        for (int i = 0; i<cloneOfCustomers.length;i++) {
+            if (cloneOfCustomers[i].equals(customer)) {
+                customers.remove(cloneOfCustomers[i]);
+            }
+        }
+        return create(customer);
     }
 
     @Override
@@ -42,15 +48,11 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         Customer[] cloneOfCustomers = customers.toArray(new Customer[customers.size()]);
         for (int i = 0; i<cloneOfCustomers.length;i++) {
             if (cloneOfCustomers[i].getCustomerId() == customerId) {
-                cloneOfCustomers[i] = null;
+                if (customers.contains(cloneOfCustomers[i])){
+                    customers.remove(cloneOfCustomers[i]);
+                }
             }
         }
-        customers.clear();
-
-        for (int j = 0; j<cloneOfCustomers.length;j++){
-            customers.add(cloneOfCustomers[j]);
-        }
-
     }
 
     @Override

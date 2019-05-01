@@ -34,7 +34,13 @@ public class VehicleRepositoryImpl implements VehicleRepository {
     @Override
     public Vehicle update(Vehicle vehicle) {
 
-        return vehicle;
+        Vehicle[] cloneOfVehicles = vehicles.toArray(new Vehicle[vehicles.size()]);
+        for (int i = 0; i<cloneOfVehicles.length;i++) {
+            if (cloneOfVehicles[i].equals(vehicle)) {
+                vehicles.remove(cloneOfVehicles[i]);
+            }
+        }
+        return create(vehicle);
     }
 
     @Override
@@ -42,15 +48,11 @@ public class VehicleRepositoryImpl implements VehicleRepository {
         Vehicle[] cloneOfVehicles = vehicles.toArray(new Vehicle[vehicles.size()]);
         for (int i = 0; i<cloneOfVehicles.length;i++) {
             if (cloneOfVehicles[i].getVehicleId() == vehicleId) {
-                cloneOfVehicles[i] = null;
+                if (vehicles.contains(cloneOfVehicles[i])){
+                    vehicles.remove(cloneOfVehicles[i]);
+                }
             }
         }
-        vehicles.clear();
-
-        for (int j = 0; j<cloneOfVehicles.length;j++){
-            vehicles.add(cloneOfVehicles[j]);
-        }
-
     }
 
     @Override

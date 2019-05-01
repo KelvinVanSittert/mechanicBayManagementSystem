@@ -34,7 +34,13 @@ public class BikeRepositoryImpl implements BikeRepository {
     @Override
     public Bike update(Bike bike) {
 
-        return bike;
+        Bike[] cloneOfBikes = bikes.toArray(new Bike[bikes.size()]);
+        for (int i = 0; i<cloneOfBikes.length;i++) {
+            if (cloneOfBikes[i].equals(bike)) {
+                bikes.remove(cloneOfBikes[i]);
+            }
+        }
+        return create(bike);
     }
 
     @Override
@@ -42,15 +48,11 @@ public class BikeRepositoryImpl implements BikeRepository {
         Bike[] cloneOfBikes = bikes.toArray(new Bike[bikes.size()]);
         for (int i = 0; i<cloneOfBikes.length;i++) {
             if (cloneOfBikes[i].getBikeId() == bikeId) {
-                cloneOfBikes[i] = null;
+                if (bikes.contains(cloneOfBikes[i])){
+                    bikes.remove(cloneOfBikes[i]);
+                }
             }
         }
-        bikes.clear();
-
-        for (int j = 0; j<cloneOfBikes.length;j++){
-            bikes.add(cloneOfBikes[j]);
-        }
-
     }
 
     @Override

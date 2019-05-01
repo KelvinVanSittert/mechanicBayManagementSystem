@@ -34,7 +34,13 @@ public class WindowRepositoryImpl implements WindowRepository {
     @Override
     public Window update(Window window) {
 
-        return window;
+        Window[] cloneOfWindows = windows.toArray(new Window[windows.size()]);
+        for (int i = 0; i<cloneOfWindows.length;i++) {
+            if (cloneOfWindows[i].equals(window)) {
+                windows.remove(cloneOfWindows[i]);
+            }
+        }
+        return create(window);
     }
 
     @Override
@@ -42,15 +48,11 @@ public class WindowRepositoryImpl implements WindowRepository {
         Window[] cloneOfWindows = windows.toArray(new Window[windows.size()]);
         for (int i = 0; i<cloneOfWindows.length;i++) {
             if (cloneOfWindows[i].getWindowId() == windowId) {
-                cloneOfWindows[i] = null;
+                if (windows.contains(cloneOfWindows[i])){
+                    windows.remove(cloneOfWindows[i]);
+                }
             }
         }
-        windows.clear();
-
-        for (int j = 0; j<cloneOfWindows.length;j++){
-            windows.add(cloneOfWindows[j]);
-        }
-
     }
 
     @Override

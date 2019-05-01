@@ -34,7 +34,13 @@ public class QuoteRepositoryImpl implements QuoteRepository {
     @Override
     public Quote update(Quote quote) {
 
-        return quote;
+        Quote[] cloneOfQuotes = quotes.toArray(new Quote[quotes.size()]);
+        for (int i = 0; i<cloneOfQuotes.length;i++) {
+            if (cloneOfQuotes[i].equals(quote)) {
+                quotes.remove(cloneOfQuotes[i]);
+            }
+        }
+        return create(quote);
     }
 
     @Override
@@ -42,15 +48,11 @@ public class QuoteRepositoryImpl implements QuoteRepository {
         Quote[] cloneOfQuotes = quotes.toArray(new Quote[quotes.size()]);
         for (int i = 0; i<cloneOfQuotes.length;i++) {
             if (cloneOfQuotes[i].getQuoteId() == quoteId) {
-                cloneOfQuotes[i] = null;
+                if (quotes.contains(cloneOfQuotes[i])){
+                    quotes.remove(cloneOfQuotes[i]);
+                }
             }
         }
-        quotes.clear();
-
-        for (int j = 0; j<cloneOfQuotes.length;j++){
-            quotes.add(cloneOfQuotes[j]);
-        }
-
     }
 
     @Override

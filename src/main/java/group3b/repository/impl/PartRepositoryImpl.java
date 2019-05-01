@@ -34,7 +34,13 @@ public class PartRepositoryImpl implements PartRepository {
     @Override
     public Part update(Part part) {
 
-        return part;
+        Part[] cloneOfParts = parts.toArray(new Part[parts.size()]);
+        for (int i = 0; i<cloneOfParts.length;i++) {
+            if (cloneOfParts[i].equals(part)) {
+                parts.remove(cloneOfParts[i]);
+            }
+        }
+        return create(part);
     }
 
     @Override
@@ -42,15 +48,11 @@ public class PartRepositoryImpl implements PartRepository {
         Part[] cloneOfParts = parts.toArray(new Part[parts.size()]);
         for (int i = 0; i<cloneOfParts.length;i++) {
             if (cloneOfParts[i].getPartId() == partId) {
-                cloneOfParts[i] = null;
+                if (parts.contains(cloneOfParts[i])){
+                    parts.remove(cloneOfParts[i]);
+                }
             }
         }
-        parts.clear();
-
-        for (int j = 0; j<cloneOfParts.length;j++){
-            parts.add(cloneOfParts[j]);
-        }
-
     }
 
     @Override

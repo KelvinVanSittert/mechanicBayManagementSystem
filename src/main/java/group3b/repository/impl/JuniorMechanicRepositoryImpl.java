@@ -34,7 +34,13 @@ public class JuniorMechanicRepositoryImpl implements JuniorMechanicRepository {
     @Override
     public JuniorMechanic update(JuniorMechanic juniorMechanic) {
 
-        return juniorMechanic;
+        JuniorMechanic[] cloneOfJuniorMechanics = juniorMechanics.toArray(new JuniorMechanic[juniorMechanics.size()]);
+        for (int i = 0; i<cloneOfJuniorMechanics.length;i++) {
+            if (cloneOfJuniorMechanics[i].equals(juniorMechanic)) {
+                juniorMechanics.remove(cloneOfJuniorMechanics[i]);
+            }
+        }
+        return create(juniorMechanic);
     }
 
     @Override
@@ -42,15 +48,11 @@ public class JuniorMechanicRepositoryImpl implements JuniorMechanicRepository {
         JuniorMechanic[] cloneOfJuniorMechanics = juniorMechanics.toArray(new JuniorMechanic[juniorMechanics.size()]);
         for (int i = 0; i<cloneOfJuniorMechanics.length;i++) {
             if (cloneOfJuniorMechanics[i].getJuniorMechanicId() == juniorMechanicId) {
-                cloneOfJuniorMechanics[i] = null;
+                if (juniorMechanics.contains(cloneOfJuniorMechanics[i])){
+                    juniorMechanics.remove(cloneOfJuniorMechanics[i]);
+                }
             }
         }
-        juniorMechanics.clear();
-
-        for (int j = 0; j<cloneOfJuniorMechanics.length;j++){
-            juniorMechanics.add(cloneOfJuniorMechanics[j]);
-        }
-
     }
 
     @Override

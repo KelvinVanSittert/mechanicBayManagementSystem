@@ -66,6 +66,13 @@ public class BayRepositoryImplTest {
     @Test
     public void update() {
 
+        Bay saved = getSavedBay();
+        String id = saved.getBayId();
+        String newName = "Hello";
+        saved.setName(newName);
+        this.repository.update(saved);
+
+        Assert.assertEquals(newName,this.repository.read(id).getName());
 
     }
 

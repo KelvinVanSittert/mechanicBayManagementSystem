@@ -34,7 +34,13 @@ public class LoyalCustomerRepositoryImpl implements LoyalCustomerRepository {
     @Override
     public LoyalCustomer update(LoyalCustomer loyalCustomer) {
 
-        return loyalCustomer;
+        LoyalCustomer[] cloneOfLoyalCustomers = loyalCustomers.toArray(new LoyalCustomer[loyalCustomers.size()]);
+        for (int i = 0; i<cloneOfLoyalCustomers.length;i++) {
+            if (cloneOfLoyalCustomers[i].equals(loyalCustomer)) {
+                loyalCustomers.remove(cloneOfLoyalCustomers[i]);
+            }
+        }
+        return create(loyalCustomer);
     }
 
     @Override
@@ -42,15 +48,11 @@ public class LoyalCustomerRepositoryImpl implements LoyalCustomerRepository {
         LoyalCustomer[] cloneOfLoyalCustomers = loyalCustomers.toArray(new LoyalCustomer[loyalCustomers.size()]);
         for (int i = 0; i<cloneOfLoyalCustomers.length;i++) {
             if (cloneOfLoyalCustomers[i].getLoyalCustomerId() == loyalCustomerId) {
-                cloneOfLoyalCustomers[i] = null;
+                if (loyalCustomers.contains(cloneOfLoyalCustomers[i])){
+                    loyalCustomers.remove(cloneOfLoyalCustomers[i]);
+                }
             }
         }
-        loyalCustomers.clear();
-
-        for (int j = 0; j<cloneOfLoyalCustomers.length;j++){
-            loyalCustomers.add(cloneOfLoyalCustomers[j]);
-        }
-
     }
 
     @Override

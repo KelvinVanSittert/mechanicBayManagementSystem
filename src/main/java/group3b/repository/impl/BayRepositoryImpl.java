@@ -34,16 +34,18 @@ public class BayRepositoryImpl implements BayRepository {
     @Override
     public Bay update(Bay bay) {
 
-        if (bays.contains((bay))){
-            Bay[] cloneOfBays = bays.toArray(new Bay[bays.size()]);
-            //TODO
+        Bay[] cloneOfBays = bays.toArray(new Bay[bays.size()]);
+        for (int i = 0; i<cloneOfBays.length;i++) {
+            if (cloneOfBays[i].equals(bay)) {
+                bays.remove(cloneOfBays[i]);
+            }
         }
-        return bay;
+        return create(bay);
     }
 
     @Override
     public void delete(String bayId) {
-    Bay[] cloneOfBays = bays.toArray(new Bay[bays.size()]);
+        Bay[] cloneOfBays = bays.toArray(new Bay[bays.size()]);
         for (int i = 0; i<cloneOfBays.length;i++) {
             if (cloneOfBays[i].getBayId() == bayId) {
                 if (bays.contains(cloneOfBays[i])){

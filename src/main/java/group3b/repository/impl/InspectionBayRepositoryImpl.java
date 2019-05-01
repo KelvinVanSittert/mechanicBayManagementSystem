@@ -34,7 +34,13 @@ public class InspectionBayRepositoryImpl implements InspectionBayRepository {
     @Override
     public InspectionBay update(InspectionBay inspectionBay) {
 
-        return inspectionBay;
+        InspectionBay[] cloneOfInspectionBays = inspectionBays.toArray(new InspectionBay[inspectionBays.size()]);
+        for (int i = 0; i<cloneOfInspectionBays.length;i++) {
+            if (cloneOfInspectionBays[i].equals(inspectionBay)) {
+                inspectionBays.remove(cloneOfInspectionBays[i]);
+            }
+        }
+        return create(inspectionBay);
     }
 
     @Override
@@ -42,15 +48,11 @@ public class InspectionBayRepositoryImpl implements InspectionBayRepository {
         InspectionBay[] cloneOfInspectionBays = inspectionBays.toArray(new InspectionBay[inspectionBays.size()]);
         for (int i = 0; i<cloneOfInspectionBays.length;i++) {
             if (cloneOfInspectionBays[i].getInspectionBayId() == inspectionBayId) {
-                cloneOfInspectionBays[i] = null;
+                if (inspectionBays.contains(cloneOfInspectionBays[i])){
+                    inspectionBays.remove(cloneOfInspectionBays[i]);
+                }
             }
         }
-        inspectionBays.clear();
-
-        for (int j = 0; j<cloneOfInspectionBays.length;j++){
-            inspectionBays.add(cloneOfInspectionBays[j]);
-        }
-
     }
 
     @Override
