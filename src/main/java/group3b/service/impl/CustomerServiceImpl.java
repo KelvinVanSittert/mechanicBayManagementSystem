@@ -12,6 +12,7 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerServiceImpl service = null;
     private CustomerRepository repository;
 
+
     private CustomerServiceImpl(){
         this.repository = CustomerRepositoryImpl.getRepository();
     }
