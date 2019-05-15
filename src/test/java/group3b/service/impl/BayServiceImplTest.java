@@ -22,4 +22,24 @@ public class BayServiceImplTest {
     @Test
     public void read() {
     }
+
+    @Test
+    public void getService() {
+    }
+
+    @Test
+    public void create1() {
+    }
+
+    @Test
+    public void update1() {
+    }
+
+    @Test
+    public void delete1() {
+    }
+
+    @Test
+    public void read1() {
+    }
 }
