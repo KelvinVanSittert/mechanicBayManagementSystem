@@ -72,7 +72,7 @@ public class BayServiceImplTest {
     }
 
     @Test
-    public void getService() {
+    public void getAll() {
         Set<Bay> all = this.repository.getAll();
         Assert.assertNotNull(all);
     }
