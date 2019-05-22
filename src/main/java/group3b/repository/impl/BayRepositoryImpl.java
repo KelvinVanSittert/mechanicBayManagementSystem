@@ -2,10 +2,12 @@ package group3b.repository.impl;
 
 import group3b.domain.Bay;
 import group3b.repository.BayRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Repository("InMemory")
 public class BayRepositoryImpl implements BayRepository {
 
     private static BayRepositoryImpl repository = null;
