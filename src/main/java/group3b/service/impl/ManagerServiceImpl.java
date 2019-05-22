@@ -4,12 +4,16 @@ import group3b.domain.Manager;
 import group3b.repository.ManagerRepository;
 import group3b.repository.impl.ManagerRepositoryImpl;
 import group3b.service.ManagerService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class ManagerServiceImpl implements ManagerService {
 
-    private ManagerServiceImpl service = null;
+    @Qualifier("InMemory")
+    private static ManagerServiceImpl service = null;
     private ManagerRepository repository;
 
     private ManagerServiceImpl(){
@@ -39,6 +43,11 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public Manager read(String s) {
         return this.repository.read(s);
+    }
+
+    @Override
+    public Set<Manager> getAll() {
+        return repository.getAll();
     }
 
 }

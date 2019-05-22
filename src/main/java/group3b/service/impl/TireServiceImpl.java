@@ -4,12 +4,16 @@ import group3b.domain.Tire;
 import group3b.repository.TireRepository;
 import group3b.repository.impl.TireRepositoryImpl;
 import group3b.service.TireService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class TireServiceImpl implements TireService {
 
-    private TireServiceImpl service = null;
+    @Qualifier("InMemory")
+    private static TireServiceImpl service = null;
     private TireRepository repository;
 
     private TireServiceImpl(){
@@ -39,6 +43,11 @@ public class TireServiceImpl implements TireService {
     @Override
     public Tire read(String s) {
         return this.repository.read(s);
+    }
+
+    @Override
+    public Set<Tire> getAll() {
+        return repository.getAll();
     }
 
 }

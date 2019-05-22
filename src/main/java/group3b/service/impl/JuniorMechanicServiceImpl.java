@@ -4,12 +4,16 @@ import group3b.domain.JuniorMechanic;
 import group3b.repository.JuniorMechanicRepository;
 import group3b.repository.impl.JuniorMechanicRepositoryImpl;
 import group3b.service.JuniorMechanicService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class JuniorMechanicServiceImpl implements JuniorMechanicService {
 
-    private JuniorMechanicServiceImpl service = null;
+    @Qualifier("InMemory")
+    private static JuniorMechanicServiceImpl service = null;
     private JuniorMechanicRepository repository;
 
     private JuniorMechanicServiceImpl(){
@@ -39,6 +43,11 @@ public class JuniorMechanicServiceImpl implements JuniorMechanicService {
     @Override
     public JuniorMechanic read(String s) {
         return this.repository.read(s);
+    }
+
+    @Override
+    public Set<JuniorMechanic> getAll() {
+        return repository.getAll();
     }
 
 }

@@ -4,12 +4,16 @@ import group3b.domain.MechanicBay;
 import group3b.repository.MechanicBayRepository;
 import group3b.repository.impl.MechanicBayRepositoryImpl;
 import group3b.service.MechanicBayService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class MechanicBayServiceImpl implements MechanicBayService {
 
-    private MechanicBayServiceImpl service = null;
+    @Qualifier("InMemory")
+    private static MechanicBayServiceImpl service = null;
     private MechanicBayRepository repository;
 
     private MechanicBayServiceImpl(){
@@ -39,6 +43,11 @@ public class MechanicBayServiceImpl implements MechanicBayService {
     @Override
     public MechanicBay read(String s) {
         return this.repository.read(s);
+    }
+
+    @Override
+    public Set<MechanicBay> getAll() {
+        return repository.getAll();
     }
 
 }

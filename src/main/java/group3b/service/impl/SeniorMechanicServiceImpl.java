@@ -4,12 +4,16 @@ import group3b.domain.SeniorMechanic;
 import group3b.repository.SeniorMechanicRepository;
 import group3b.repository.impl.SeniorMechanicRepositoryImpl;
 import group3b.service.SeniorMechanicService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class SeniorMechanicServiceImpl implements SeniorMechanicService {
 
-    private SeniorMechanicServiceImpl service = null;
+    @Qualifier("InMemory")
+    private static SeniorMechanicServiceImpl service = null;
     private SeniorMechanicRepository repository;
 
     private SeniorMechanicServiceImpl(){
@@ -39,6 +43,11 @@ public class SeniorMechanicServiceImpl implements SeniorMechanicService {
     @Override
     public SeniorMechanic read(String s) {
         return this.repository.read(s);
+    }
+
+    @Override
+    public Set<SeniorMechanic> getAll() {
+        return repository.getAll();
     }
 
 }

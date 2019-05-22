@@ -18,24 +18,24 @@ import static org.junit.Assert.*;
 
 public class BikeServiceImplTest {
 
-    private BikeRepository repository;
+    private BikeRepository service;
     private Bike bike;
 
     private Bike getSavedBike(){
-        Set<Bike> savedBikes = this.repository.getAll();
+        Set<Bike> savedBikes = this.service.getAll();
         return savedBikes.iterator().next();
     }
 
     @Before
     public void setUp() throws Exception{
-        this.repository = BikeRepositoryImpl.getRepository();
+        this.service = BikeRepositoryImpl.getRepository();
         this.bike = BikeFactory.getBike("Test Bike");
     }
 
     @Test
     public void create() {
 
-        Bike testCreate = this.repository.create(this.bike);
+        Bike testCreate = this.service.create(this.bike);
         Assert.assertSame(testCreate, this.bike);
 
     }
@@ -43,14 +43,14 @@ public class BikeServiceImplTest {
     @Test
     public void delete() {
 
-        int startingSize = this.repository.getAll().size();
+        int startingSize = this.service.getAll().size();
         Bike savedBike = getSavedBike();
-        this.repository.delete(savedBike.getBikeId());
+        this.service.delete(savedBike.getBikeId());
 
-        Assert.assertEquals(startingSize-1,this.repository.getAll().size());
+        Assert.assertEquals(startingSize-1,this.service.getAll().size());
 
         //Create another bike after deleting so that Read() has something to read.
-        this.repository.create(this.bike);
+        this.service.create(this.bike);
 
     }
 
@@ -59,7 +59,7 @@ public class BikeServiceImplTest {
 
         Bike savedBike = getSavedBike();
         String id = savedBike.getBikeId();
-        Bike readBike = this.repository.read(id);
+        Bike readBike = this.service.read(id);
         Assert.assertEquals(savedBike, readBike);
     }
 
@@ -70,16 +70,16 @@ public class BikeServiceImplTest {
         String id = saved.getBikeId();
         String newName = "Hello";
         saved.setName(newName);
-        this.repository.update(saved);
+        this.service.update(saved);
 
-        Assert.assertEquals(newName,this.repository.read(id).getName());
+        Assert.assertEquals(newName,this.service.read(id).getName());
 
     }
 
     @Test
     public void getAll() {
 
-        Set<Bike> all = this.repository.getAll();
+        Set<Bike> all = this.service.getAll();
         Assert.assertNotNull(all);
 
     }

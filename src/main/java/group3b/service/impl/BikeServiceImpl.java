@@ -4,12 +4,17 @@ import group3b.domain.Bike;
 import group3b.repository.BikeRepository;
 import group3b.repository.impl.BikeRepositoryImpl;
 import group3b.service.BikeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class BikeServiceImpl implements BikeService {
 
-    private BikeServiceImpl service = null;
+    @Qualifier("InMemory")
+    private static BikeServiceImpl service = null;
     private BikeRepository repository;
 
     private BikeServiceImpl(){
@@ -39,6 +44,11 @@ public class BikeServiceImpl implements BikeService {
     @Override
     public Bike read(String s) {
         return this.repository.read(s);
+    }
+
+    @Override
+    public Set<Bike> getAll() {
+        return repository.getAll();
     }
 
 }

@@ -4,12 +4,16 @@ import group3b.domain.Engine;
 import group3b.repository.EngineRepository;
 import group3b.repository.impl.EngineRepositoryImpl;
 import group3b.service.EngineService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class EngineServiceImpl implements EngineService {
 
-    private EngineServiceImpl service = null;
+    @Qualifier("InMemory")
+    private static EngineServiceImpl service = null;
     private EngineRepository repository;
 
     private EngineServiceImpl(){
@@ -39,6 +43,11 @@ public class EngineServiceImpl implements EngineService {
     @Override
     public Engine read(String s) {
         return this.repository.read(s);
+    }
+
+    @Override
+    public Set<Engine> getAll() {
+        return repository.getAll();
     }
 
 }

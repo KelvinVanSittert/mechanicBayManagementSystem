@@ -5,15 +5,15 @@ import group3b.repository.BayRepository;
 import group3b.repository.impl.BayRepositoryImpl;
 import group3b.service.BayService;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
-@Service("ServiceImpl")
+@Service
 public class BayServiceImpl implements BayService {
 
-    @Autowired
     @Qualifier("InMemory")
     private static BayServiceImpl service = null;
     private BayRepository repository;
@@ -45,6 +45,11 @@ public class BayServiceImpl implements BayService {
     @Override
     public Bay read(String s) {
         return this.repository.read(s);
+    }
+
+    @Override
+    public Set<Bay> getAll() {
+        return repository.getAll();
     }
 
 }

@@ -3,21 +3,25 @@ package group3b.service.impl;
 import group3b.repository.impl.BayRepositoryImpl;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
 import group3b.domain.Bay;
 import group3b.factory.BayFactory;
 import group3b.repository.BayRepository;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Set;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@RunWith(SpringRunner.class)
 public class BayServiceImplTest {
 
+    @Autowired
+    @Qualifier("ServiceImp")
     private BayRepository repository;
     private Bay bay;
 

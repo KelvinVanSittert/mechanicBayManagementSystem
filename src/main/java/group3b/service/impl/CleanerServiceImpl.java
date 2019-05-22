@@ -4,12 +4,16 @@ import group3b.domain.Cleaner;
 import group3b.repository.CleanerRepository;
 import group3b.repository.impl.CleanerRepositoryImpl;
 import group3b.service.CleanerService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class CleanerServiceImpl implements CleanerService {
 
-    private CleanerServiceImpl service = null;
+    @Qualifier("InMemory")
+    private static CleanerServiceImpl service = null;
     private CleanerRepository repository;
 
     private CleanerServiceImpl(){
@@ -39,6 +43,11 @@ public class CleanerServiceImpl implements CleanerService {
     @Override
     public Cleaner read(String s) {
         return this.repository.read(s);
+    }
+
+    @Override
+    public Set<Cleaner> getAll() {
+        return repository.getAll();
     }
 
 }

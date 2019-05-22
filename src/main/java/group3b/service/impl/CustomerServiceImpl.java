@@ -4,12 +4,16 @@ import group3b.domain.Customer;
 import group3b.repository.CustomerRepository;
 import group3b.repository.impl.CustomerRepositoryImpl;
 import group3b.service.CustomerService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class CustomerServiceImpl implements CustomerService {
 
-    private CustomerServiceImpl service = null;
+    @Qualifier("InMemory")
+    private static CustomerServiceImpl service = null;
     private CustomerRepository repository;
 
 
@@ -40,6 +44,11 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer read(String s) {
         return this.repository.read(s);
+    }
+
+    @Override
+    public Set<Customer> getAll() {
+        return repository.getAll();
     }
 
 }

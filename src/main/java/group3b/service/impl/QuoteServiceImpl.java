@@ -4,12 +4,16 @@ import group3b.domain.Quote;
 import group3b.repository.QuoteRepository;
 import group3b.repository.impl.QuoteRepositoryImpl;
 import group3b.service.QuoteService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class QuoteServiceImpl implements QuoteService {
 
-    private QuoteServiceImpl service = null;
+    @Qualifier("InMemory")
+    private static QuoteServiceImpl service = null;
     private QuoteRepository repository;
 
     private QuoteServiceImpl(){
@@ -39,6 +43,11 @@ public class QuoteServiceImpl implements QuoteService {
     @Override
     public Quote read(String s) {
         return this.repository.read(s);
+    }
+
+    @Override
+    public Set<Quote> getAll() {
+        return repository.getAll();
     }
 
 }

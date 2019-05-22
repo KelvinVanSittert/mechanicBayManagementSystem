@@ -1,6 +1,8 @@
 package group3b.service;
 import group3b.domain.LoyalCustomer;
 
+import java.util.Set;
+
 public interface LoyalCustomerService extends IService<LoyalCustomer, String>{
-    LoyalCustomer create(LoyalCustomer loyalCustomer);
+    Set<LoyalCustomer> getAll();
 }

@@ -4,12 +4,16 @@ import group3b.domain.Window;
 import group3b.repository.WindowRepository;
 import group3b.repository.impl.WindowRepositoryImpl;
 import group3b.service.WindowService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class WindowServiceImpl implements WindowService {
 
-    private WindowServiceImpl service = null;
+    @Qualifier("InMemory")
+    private static WindowServiceImpl service = null;
     private WindowRepository repository;
 
     private WindowServiceImpl(){
@@ -39,6 +43,11 @@ public class WindowServiceImpl implements WindowService {
     @Override
     public Window read(String s) {
         return this.repository.read(s);
+    }
+
+    @Override
+    public Set<Window> getAll() {
+        return repository.getAll();
     }
 
 }

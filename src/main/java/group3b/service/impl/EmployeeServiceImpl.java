@@ -4,12 +4,16 @@ import group3b.domain.Employee;
 import group3b.repository.EmployeeRepository;
 import group3b.repository.impl.EmployeeRepositoryImpl;
 import group3b.service.EmployeeService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private EmployeeServiceImpl service = null;
+    @Qualifier("InMemory")
+    private static EmployeeServiceImpl service = null;
     private EmployeeRepository repository;
 
     private EmployeeServiceImpl(){
@@ -39,6 +43,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee read(String s) {
         return this.repository.read(s);
+    }
+
+    @Override
+    public Set<Employee> getAll() {
+        return repository.getAll();
     }
 
 }

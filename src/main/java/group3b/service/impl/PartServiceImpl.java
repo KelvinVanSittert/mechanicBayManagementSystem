@@ -4,12 +4,16 @@ import group3b.domain.Part;
 import group3b.repository.PartRepository;
 import group3b.repository.impl.PartRepositoryImpl;
 import group3b.service.PartService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class PartServiceImpl implements PartService {
 
-    private PartServiceImpl service = null;
+    @Qualifier("InMemory")
+    private static PartServiceImpl service = null;
     private PartRepository repository;
 
     private PartServiceImpl(){
@@ -39,6 +43,11 @@ public class PartServiceImpl implements PartService {
     @Override
     public Part read(String s) {
         return this.repository.read(s);
+    }
+
+    @Override
+    public Set<Part> getAll() {
+        return repository.getAll();
     }
 
 }

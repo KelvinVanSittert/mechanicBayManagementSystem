@@ -4,12 +4,16 @@ import group3b.domain.InspectionBay;
 import group3b.repository.InspectionBayRepository;
 import group3b.repository.impl.InspectionBayRepositoryImpl;
 import group3b.service.InspectionBayService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class InspectionBayServiceImpl implements InspectionBayService {
 
-    private InspectionBayServiceImpl service = null;
+    @Qualifier("InMemory")
+    private static InspectionBayServiceImpl service = null;
     private InspectionBayRepository repository;
 
     private InspectionBayServiceImpl(){
@@ -39,6 +43,11 @@ public class InspectionBayServiceImpl implements InspectionBayService {
     @Override
     public InspectionBay read(String s) {
         return this.repository.read(s);
+    }
+
+    @Override
+    public Set<InspectionBay> getAll() {
+        return repository.getAll();
     }
 
 }

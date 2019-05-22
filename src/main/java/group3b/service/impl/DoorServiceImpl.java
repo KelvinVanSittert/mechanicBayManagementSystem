@@ -4,12 +4,16 @@ import group3b.domain.Door;
 import group3b.repository.DoorRepository;
 import group3b.repository.impl.DoorRepositoryImpl;
 import group3b.service.DoorService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class DoorServiceImpl implements DoorService {
 
-    private DoorServiceImpl service = null;
+    @Qualifier("InMemory")
+    private static DoorServiceImpl service = null;
     private DoorRepository repository;
 
     private DoorServiceImpl(){
@@ -39,6 +43,11 @@ public class DoorServiceImpl implements DoorService {
     @Override
     public Door read(String s) {
         return this.repository.read(s);
+    }
+
+    @Override
+    public Set<Door> getAll() {
+        return repository.getAll();
     }
 
 }

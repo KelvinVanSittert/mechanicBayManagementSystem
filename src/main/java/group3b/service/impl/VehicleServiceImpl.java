@@ -4,12 +4,16 @@ import group3b.domain.Vehicle;
 import group3b.repository.VehicleRepository;
 import group3b.repository.impl.VehicleRepositoryImpl;
 import group3b.service.VehicleService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class VehicleServiceImpl implements VehicleService {
 
-    private VehicleServiceImpl service = null;
+    @Qualifier("InMemory")
+    private static VehicleServiceImpl service = null;
     private VehicleRepository repository;
 
     private VehicleServiceImpl(){
@@ -39,6 +43,11 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public Vehicle read(String s) {
         return this.repository.read(s);
+    }
+
+    @Override
+    public Set<Vehicle> getAll() {
+        return repository.getAll();
     }
 
 }

@@ -2,9 +2,11 @@ package group3b.service;
 
 import group3b.domain.Bay;
 
+import java.util.Set;
+
 
 public interface BayService extends IService<Bay, String>{
 
-    Bay create(Bay bay);
+    Set<Bay> getAll();
 
 }

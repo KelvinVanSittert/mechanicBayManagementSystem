@@ -1,6 +1,8 @@
 package group3b.service;
 import group3b.domain.Truck;
 
+import java.util.Set;
+
 public interface TruckService extends IService<Truck, String>{
-    Truck create(Truck truck);
+    Set<Truck> getAll();
 }

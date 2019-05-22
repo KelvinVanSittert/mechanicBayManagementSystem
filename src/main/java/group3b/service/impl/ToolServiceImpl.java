@@ -4,12 +4,16 @@ import group3b.domain.Tool;
 import group3b.repository.ToolRepository;
 import group3b.repository.impl.ToolRepositoryImpl;
 import group3b.service.ToolService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class ToolServiceImpl implements ToolService {
 
-    private ToolServiceImpl service = null;
+    @Qualifier("InMemory")
+    private static ToolServiceImpl service = null;
     private ToolRepository repository;
 
     private ToolServiceImpl(){
@@ -39,6 +43,11 @@ public class ToolServiceImpl implements ToolService {
     @Override
     public Tool read(String s) {
         return this.repository.read(s);
+    }
+
+    @Override
+    public Set<Tool> getAll() {
+        return repository.getAll();
     }
 
 }
