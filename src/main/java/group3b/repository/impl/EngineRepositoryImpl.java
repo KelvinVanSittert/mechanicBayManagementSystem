@@ -2,10 +2,12 @@ package group3b.repository.impl;
 
 import group3b.domain.Engine;
 import group3b.repository.EngineRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Repository("EngineRepo")
 public class EngineRepositoryImpl implements EngineRepository {
 
     private static EngineRepositoryImpl repository = null;

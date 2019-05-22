@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.HashSet;
 import java.util.Set;
 
-@Repository("InMemory")
+@Repository("BayRepo")
 public class BayRepositoryImpl implements BayRepository {
 
     private static BayRepositoryImpl repository = null;

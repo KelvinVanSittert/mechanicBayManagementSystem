@@ -2,10 +2,12 @@ package group3b.repository.impl;
 
 import group3b.domain.Bike;
 import group3b.repository.BikeRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Repository("BikeRepo")
 public class BikeRepositoryImpl implements BikeRepository {
 
     private static BikeRepositoryImpl repository = null;

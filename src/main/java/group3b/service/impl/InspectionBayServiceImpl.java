@@ -4,6 +4,7 @@ import group3b.domain.InspectionBay;
 import group3b.repository.InspectionBayRepository;
 import group3b.repository.impl.InspectionBayRepositoryImpl;
 import group3b.service.InspectionBayService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,8 @@ import java.util.Set;
 @Service
 public class InspectionBayServiceImpl implements InspectionBayService {
 
-    @Qualifier("InMemory")
+    @Autowired
+    @Qualifier("InspectionBayRepo")
     private static InspectionBayServiceImpl service = null;
     private InspectionBayRepository repository;
 

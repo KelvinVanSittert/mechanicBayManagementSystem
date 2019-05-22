@@ -4,6 +4,7 @@ import group3b.domain.Mechanic;
 import group3b.repository.MechanicRepository;
 import group3b.repository.impl.MechanicRepositoryImpl;
 import group3b.service.MechanicService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,8 @@ import java.util.Set;
 @Service
 public class MechanicServiceImpl implements MechanicService {
 
-    @Qualifier("InMemory")
+    @Autowired
+    @Qualifier("MechanicRepo")
     private static MechanicServiceImpl service = null;
     private MechanicRepository repository;
 

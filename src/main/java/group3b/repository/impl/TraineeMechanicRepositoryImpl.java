@@ -2,10 +2,12 @@ package group3b.repository.impl;
 
 import group3b.domain.TraineeMechanic;
 import group3b.repository.TraineeMechanicRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Repository("TraineeMechanicRepo")
 public class TraineeMechanicRepositoryImpl implements TraineeMechanicRepository {
 
     private static TraineeMechanicRepositoryImpl repository = null;

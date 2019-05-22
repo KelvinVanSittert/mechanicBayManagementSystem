@@ -2,10 +2,12 @@ package group3b.repository.impl;
 
 import group3b.domain.LoyalCustomer;
 import group3b.repository.LoyalCustomerRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Repository("LoyalCustomerRepo")
 public class LoyalCustomerRepositoryImpl implements LoyalCustomerRepository {
 
     private static LoyalCustomerRepositoryImpl repository = null;

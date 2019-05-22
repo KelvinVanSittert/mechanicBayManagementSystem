@@ -4,6 +4,7 @@ import group3b.domain.Door;
 import group3b.repository.DoorRepository;
 import group3b.repository.impl.DoorRepositoryImpl;
 import group3b.service.DoorService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,8 @@ import java.util.Set;
 @Service
 public class DoorServiceImpl implements DoorService {
 
-    @Qualifier("InMemory")
+    @Autowired
+    @Qualifier("DoorRepo")
     private static DoorServiceImpl service = null;
     private DoorRepository repository;
 

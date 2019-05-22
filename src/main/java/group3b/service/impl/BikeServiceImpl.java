@@ -13,7 +13,8 @@ import java.util.Set;
 @Service
 public class BikeServiceImpl implements BikeService {
 
-    @Qualifier("InMemory")
+    @Autowired
+    @Qualifier("BikeRepo")
     private static BikeServiceImpl service = null;
     private BikeRepository repository;
 

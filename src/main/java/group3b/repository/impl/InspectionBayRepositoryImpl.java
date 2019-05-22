@@ -2,10 +2,12 @@ package group3b.repository.impl;
 
 import group3b.domain.InspectionBay;
 import group3b.repository.InspectionBayRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Repository("InspectionBayRepo")
 public class InspectionBayRepositoryImpl implements InspectionBayRepository {
 
     private static InspectionBayRepositoryImpl repository = null;

@@ -4,6 +4,7 @@ import group3b.domain.Employee;
 import group3b.repository.EmployeeRepository;
 import group3b.repository.impl.EmployeeRepositoryImpl;
 import group3b.service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,8 @@ import java.util.Set;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    @Qualifier("InMemory")
+    @Autowired
+    @Qualifier("EmployeeRepo")
     private static EmployeeServiceImpl service = null;
     private EmployeeRepository repository;
 

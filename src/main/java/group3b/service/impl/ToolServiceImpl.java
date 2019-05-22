@@ -4,6 +4,7 @@ import group3b.domain.Tool;
 import group3b.repository.ToolRepository;
 import group3b.repository.impl.ToolRepositoryImpl;
 import group3b.service.ToolService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,8 @@ import java.util.Set;
 @Service
 public class ToolServiceImpl implements ToolService {
 
-    @Qualifier("InMemory")
+    @Autowired
+    @Qualifier("ToolRepo")
     private static ToolServiceImpl service = null;
     private ToolRepository repository;
 

@@ -4,6 +4,7 @@ import group3b.domain.Manager;
 import group3b.repository.ManagerRepository;
 import group3b.repository.impl.ManagerRepositoryImpl;
 import group3b.service.ManagerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,8 @@ import java.util.Set;
 @Service
 public class ManagerServiceImpl implements ManagerService {
 
-    @Qualifier("InMemory")
+    @Autowired
+    @Qualifier("ManagerRepo")
     private static ManagerServiceImpl service = null;
     private ManagerRepository repository;
 

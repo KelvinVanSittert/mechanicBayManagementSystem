@@ -2,10 +2,12 @@ package group3b.repository.impl;
 
 import group3b.domain.Cleaner;
 import group3b.repository.CleanerRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Repository("CleanerRepo")
 public class CleanerRepositoryImpl implements CleanerRepository {
 
     private static CleanerRepositoryImpl repository = null;

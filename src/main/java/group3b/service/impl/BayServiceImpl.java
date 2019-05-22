@@ -14,7 +14,8 @@ import java.util.Set;
 @Service
 public class BayServiceImpl implements BayService {
 
-    @Qualifier("InMemory")
+    @Autowired
+    @Qualifier("BayRepo")
     private static BayServiceImpl service = null;
     private BayRepository repository;
 

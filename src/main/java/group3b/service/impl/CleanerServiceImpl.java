@@ -4,6 +4,7 @@ import group3b.domain.Cleaner;
 import group3b.repository.CleanerRepository;
 import group3b.repository.impl.CleanerRepositoryImpl;
 import group3b.service.CleanerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,8 @@ import java.util.Set;
 @Service
 public class CleanerServiceImpl implements CleanerService {
 
-    @Qualifier("InMemory")
+    @Autowired
+    @Qualifier("CleanerRepo")
     private static CleanerServiceImpl service = null;
     private CleanerRepository repository;
 

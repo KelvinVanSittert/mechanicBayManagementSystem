@@ -2,10 +2,12 @@ package group3b.repository.impl;
 
 import group3b.domain.Tool;
 import group3b.repository.ToolRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Repository("ToolRepo")
 public class ToolRepositoryImpl implements ToolRepository {
 
     private static ToolRepositoryImpl repository = null;

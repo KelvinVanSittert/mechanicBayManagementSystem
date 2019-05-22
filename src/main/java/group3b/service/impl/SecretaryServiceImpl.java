@@ -4,6 +4,7 @@ import group3b.domain.Secretary;
 import group3b.repository.SecretaryRepository;
 import group3b.repository.impl.SecretaryRepositoryImpl;
 import group3b.service.SecretaryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,8 @@ import java.util.Set;
 @Service
 public class SecretaryServiceImpl implements SecretaryService {
 
-    @Qualifier("InMemory")
+    @Autowired
+    @Qualifier("SecretaryRepo")
     private static SecretaryServiceImpl service = null;
     private SecretaryRepository repository;
 

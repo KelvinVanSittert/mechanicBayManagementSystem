@@ -2,10 +2,12 @@ package group3b.repository.impl;
 
 import group3b.domain.Manager;
 import group3b.repository.ManagerRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Repository("ManagerRepo")
 public class ManagerRepositoryImpl implements ManagerRepository {
 
     private static ManagerRepositoryImpl repository = null;

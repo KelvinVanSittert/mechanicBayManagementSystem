@@ -2,10 +2,12 @@ package group3b.repository.impl;
 
 import group3b.domain.Secretary;
 import group3b.repository.SecretaryRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Repository("SecretaryRepo")
 public class SecretaryRepositoryImpl implements SecretaryRepository {
 
     private static SecretaryRepositoryImpl repository = null;

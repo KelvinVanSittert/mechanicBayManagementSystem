@@ -4,6 +4,7 @@ import group3b.domain.Quote;
 import group3b.repository.QuoteRepository;
 import group3b.repository.impl.QuoteRepositoryImpl;
 import group3b.service.QuoteService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,8 @@ import java.util.Set;
 @Service
 public class QuoteServiceImpl implements QuoteService {
 
-    @Qualifier("InMemory")
+    @Autowired
+    @Qualifier("QuoteRepo")
     private static QuoteServiceImpl service = null;
     private QuoteRepository repository;
 

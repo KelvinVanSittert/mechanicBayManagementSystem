@@ -2,10 +2,12 @@ package group3b.repository.impl;
 
 import group3b.domain.Quote;
 import group3b.repository.QuoteRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Repository("QuoteRepo")
 public class QuoteRepositoryImpl implements QuoteRepository {
 
     private static QuoteRepositoryImpl repository = null;

@@ -4,6 +4,7 @@ import group3b.domain.Part;
 import group3b.repository.PartRepository;
 import group3b.repository.impl.PartRepositoryImpl;
 import group3b.service.PartService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,8 @@ import java.util.Set;
 @Service
 public class PartServiceImpl implements PartService {
 
-    @Qualifier("InMemory")
+    @Autowired
+    @Qualifier("PartRepo")
     private static PartServiceImpl service = null;
     private PartRepository repository;
 

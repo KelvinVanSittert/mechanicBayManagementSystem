@@ -2,10 +2,12 @@ package group3b.repository.impl;
 
 import group3b.domain.Part;
 import group3b.repository.PartRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Repository("PartRepo")
 public class PartRepositoryImpl implements PartRepository {
 
     private static PartRepositoryImpl repository = null;

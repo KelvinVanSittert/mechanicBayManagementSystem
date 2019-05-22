@@ -2,10 +2,12 @@ package group3b.repository.impl;
 
 import group3b.domain.Car;
 import group3b.repository.CarRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Repository("CarRepo")
 public class CarRepositoryImpl implements CarRepository {
 
     private static CarRepositoryImpl repository = null;

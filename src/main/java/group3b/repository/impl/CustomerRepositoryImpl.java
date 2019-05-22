@@ -2,10 +2,12 @@ package group3b.repository.impl;
 
 import group3b.domain.Customer;
 import group3b.repository.CustomerRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Repository("CustomerRepo")
 public class CustomerRepositoryImpl implements CustomerRepository {
 
     private static CustomerRepositoryImpl repository = null;

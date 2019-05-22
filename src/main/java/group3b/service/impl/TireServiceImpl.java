@@ -4,6 +4,7 @@ import group3b.domain.Tire;
 import group3b.repository.TireRepository;
 import group3b.repository.impl.TireRepositoryImpl;
 import group3b.service.TireService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,8 @@ import java.util.Set;
 @Service
 public class TireServiceImpl implements TireService {
 
-    @Qualifier("InMemory")
+    @Autowired
+    @Qualifier("TireRepo")
     private static TireServiceImpl service = null;
     private TireRepository repository;
 

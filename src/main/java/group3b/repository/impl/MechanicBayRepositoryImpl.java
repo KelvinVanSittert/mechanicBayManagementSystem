@@ -2,10 +2,12 @@ package group3b.repository.impl;
 
 import group3b.domain.MechanicBay;
 import group3b.repository.MechanicBayRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Repository("MechanicBayRepo")
 public class MechanicBayRepositoryImpl implements MechanicBayRepository {
 
     private static MechanicBayRepositoryImpl repository = null;

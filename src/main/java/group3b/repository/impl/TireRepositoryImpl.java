@@ -2,10 +2,12 @@ package group3b.repository.impl;
 
 import group3b.domain.Tire;
 import group3b.repository.TireRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Repository("TireRepo")
 public class TireRepositoryImpl implements TireRepository {
 
     private static TireRepositoryImpl repository = null;

@@ -4,6 +4,7 @@ import group3b.domain.Window;
 import group3b.repository.WindowRepository;
 import group3b.repository.impl.WindowRepositoryImpl;
 import group3b.service.WindowService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,8 @@ import java.util.Set;
 @Service
 public class WindowServiceImpl implements WindowService {
 
-    @Qualifier("InMemory")
+    @Autowired
+    @Qualifier("WindowRepo")
     private static WindowServiceImpl service = null;
     private WindowRepository repository;
 

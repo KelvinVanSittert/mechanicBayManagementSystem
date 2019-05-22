@@ -4,6 +4,7 @@ import group3b.domain.Engine;
 import group3b.repository.EngineRepository;
 import group3b.repository.impl.EngineRepositoryImpl;
 import group3b.service.EngineService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,8 @@ import java.util.Set;
 @Service
 public class EngineServiceImpl implements EngineService {
 
-    @Qualifier("InMemory")
+    @Autowired
+    @Qualifier("EngineRepo")
     private static EngineServiceImpl service = null;
     private EngineRepository repository;
 

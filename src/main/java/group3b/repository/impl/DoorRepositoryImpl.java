@@ -2,10 +2,12 @@ package group3b.repository.impl;
 
 import group3b.domain.Door;
 import group3b.repository.DoorRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Repository("DoorRepo")
 public class DoorRepositoryImpl implements DoorRepository {
 
     private static DoorRepositoryImpl repository = null;

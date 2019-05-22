@@ -2,10 +2,12 @@ package group3b.repository.impl;
 
 import group3b.domain.Employee;
 import group3b.repository.EmployeeRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Repository("EmployeeRepo")
 public class EmployeeRepositoryImpl implements EmployeeRepository {
 
     private static EmployeeRepositoryImpl repository = null;

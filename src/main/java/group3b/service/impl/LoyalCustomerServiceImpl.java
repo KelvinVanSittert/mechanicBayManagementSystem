@@ -4,6 +4,7 @@ import group3b.domain.LoyalCustomer;
 import group3b.repository.LoyalCustomerRepository;
 import group3b.repository.impl.LoyalCustomerRepositoryImpl;
 import group3b.service.LoyalCustomerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,8 @@ import java.util.Set;
 @Service
 public class LoyalCustomerServiceImpl implements LoyalCustomerService {
 
-    @Qualifier("InMemory")
+    @Autowired
+    @Qualifier("LoyalCustomerRepo")
     private static LoyalCustomerServiceImpl service = null;
     private LoyalCustomerRepository repository;
 

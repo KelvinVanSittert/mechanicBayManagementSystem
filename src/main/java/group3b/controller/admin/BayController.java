@@ -12,7 +12,6 @@ import java.util.Set;
 @RestController
 @RequestMapping("/bay")
 public class BayController {
-    @Autowired
     @Qualifier("ServiceImpl")
     private BayService service;
 

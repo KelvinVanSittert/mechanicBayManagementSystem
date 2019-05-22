@@ -1,5 +1,8 @@
 package group3b.domain;
 
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+
+@EntityScan
 public class Part {
 
     private String name;

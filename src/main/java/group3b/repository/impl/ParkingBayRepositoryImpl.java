@@ -2,10 +2,12 @@ package group3b.repository.impl;
 
 import group3b.domain.ParkingBay;
 import group3b.repository.ParkingBayRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Repository("ParkingBayRepo")
 public class ParkingBayRepositoryImpl implements ParkingBayRepository {
 
     private static ParkingBayRepositoryImpl repository = null;
