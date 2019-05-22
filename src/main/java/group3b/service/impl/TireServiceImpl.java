@@ -22,7 +22,7 @@ public class TireServiceImpl implements TireService {
         this.repository = TireRepositoryImpl.getRepository();
     }
 
-    public TireService getService(){
+    public static TireService getService(){
         if (service == null) service = new TireServiceImpl();
         return service;
     }

@@ -22,7 +22,7 @@ public class ParkingBayServiceImpl implements ParkingBayService {
         this.repository = ParkingBayRepositoryImpl.getRepository();
     }
 
-    public ParkingBayService getService(){
+    public static ParkingBayService getService(){
         if (service == null) service = new ParkingBayServiceImpl();
         return service;
     }

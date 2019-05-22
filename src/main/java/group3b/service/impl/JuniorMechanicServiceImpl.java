@@ -22,7 +22,7 @@ public class JuniorMechanicServiceImpl implements JuniorMechanicService {
         this.repository = JuniorMechanicRepositoryImpl.getRepository();
     }
 
-    public JuniorMechanicService getService(){
+    public static JuniorMechanicService getService(){
         if (service == null) service = new JuniorMechanicServiceImpl();
         return service;
     }

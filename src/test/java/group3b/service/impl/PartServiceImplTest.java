@@ -4,34 +4,39 @@ import group3b.domain.Part;
 import group3b.factory.PartFactory;
 import group3b.repository.PartRepository;
 import group3b.repository.impl.PartRepositoryImpl;
+import group3b.service.PartService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Set;
 
-import static org.junit.Assert.*;
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@RunWith(SpringRunner.class)
 
 public class PartServiceImplTest {
 
-    private PartRepository repository;
+    private PartService service;
     private Part part;
 
     private Part getSavedPart(){
-        Set<Part> savedParts = this.repository.getAll();
+        Set<Part> savedParts = this.service.getAll();
         return savedParts.iterator().next();
     }
 
     @Before
     public void setUp() throws Exception{
-        this.repository = PartRepositoryImpl.getRepository();
+        this.service = PartServiceImpl.getService();
         this.part = PartFactory.getPart("Test Part");
     }
 
     @Test
     public void create() {
 
-        Part testCreate = this.repository.create(this.part);
+        Part testCreate = this.service.create(this.part);
         Assert.assertSame(testCreate, this.part);
 
     }
@@ -39,14 +44,14 @@ public class PartServiceImplTest {
     @Test
     public void delete() {
 
-        int startingSize = this.repository.getAll().size();
+        int startingSize = this.service.getAll().size();
         Part savedPart = getSavedPart();
-        this.repository.delete(savedPart.getPartId());
+        this.service.delete(savedPart.getPartId());
 
-        Assert.assertEquals(startingSize-1,this.repository.getAll().size());
+        Assert.assertEquals(startingSize-1,this.service.getAll().size());
 
         //Create another part after deleting so that Read() has something to read.
-        this.repository.create(this.part);
+        this.service.create(this.part);
 
     }
 
@@ -55,7 +60,7 @@ public class PartServiceImplTest {
 
         Part savedPart = getSavedPart();
         String id = savedPart.getPartId();
-        Part readPart = this.repository.read(id);
+        Part readPart = this.service.read(id);
         Assert.assertEquals(savedPart, readPart);
     }
 
@@ -66,16 +71,16 @@ public class PartServiceImplTest {
         String id = saved.getPartId();
         String newName = "Hello";
         saved.setName(newName);
-        this.repository.update(saved);
+        this.service.update(saved);
 
-        Assert.assertEquals(newName,this.repository.read(id).getName());
+        Assert.assertEquals(newName,this.service.read(id).getName());
 
     }
 
     @Test
     public void getAll() {
 
-        Set<Part> all = this.repository.getAll();
+        Set<Part> all = this.service.getAll();
         Assert.assertNotNull(all);
 
     }

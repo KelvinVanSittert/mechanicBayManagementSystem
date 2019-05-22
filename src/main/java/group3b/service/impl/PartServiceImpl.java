@@ -22,7 +22,7 @@ public class PartServiceImpl implements PartService {
         this.repository = PartRepositoryImpl.getRepository();
     }
 
-    public PartService getService(){
+    public static PartService getService(){
         if (service == null) service = new PartServiceImpl();
         return service;
     }

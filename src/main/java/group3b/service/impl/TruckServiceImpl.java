@@ -22,7 +22,7 @@ public class TruckServiceImpl implements TruckService {
         this.repository = TruckRepositoryImpl.getRepository();
     }
 
-    public TruckService getService(){
+    public static TruckService getService(){
         if (service == null) service = new TruckServiceImpl();
         return service;
     }

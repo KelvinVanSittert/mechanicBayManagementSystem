@@ -4,33 +4,38 @@ import group3b.domain.Tire;
 import group3b.factory.TireFactory;
 import group3b.repository.TireRepository;
 import group3b.repository.impl.TireRepositoryImpl;
+import group3b.service.TireService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Set;
 
-import static org.junit.Assert.*;
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@RunWith(SpringRunner.class)
 
 public class TireServiceImplTest {
-    private TireRepository repository;
+    private TireService service;
     private Tire tire;
 
     private Tire getSavedTire(){
-        Set<Tire> savedTires = this.repository.getAll();
+        Set<Tire> savedTires = this.service.getAll();
         return savedTires.iterator().next();
     }
 
     @Before
     public void setUp() throws Exception{
-        this.repository = TireRepositoryImpl.getRepository();
+        this.service = TireServiceImpl.getService();
         this.tire = TireFactory.getTire("Test Tire");
     }
 
     @Test
     public void create() {
 
-        Tire testCreate = this.repository.create(this.tire);
+        Tire testCreate = this.service.create(this.tire);
         Assert.assertSame(testCreate, this.tire);
 
     }
@@ -38,14 +43,14 @@ public class TireServiceImplTest {
     @Test
     public void delete() {
 
-        int startingSize = this.repository.getAll().size();
+        int startingSize = this.service.getAll().size();
         Tire savedTire = getSavedTire();
-        this.repository.delete(savedTire.getTireId());
+        this.service.delete(savedTire.getTireId());
 
-        Assert.assertEquals(startingSize-1,this.repository.getAll().size());
+        Assert.assertEquals(startingSize-1,this.service.getAll().size());
 
         //Create another tire after deleting so that Read() has something to read.
-        this.repository.create(this.tire);
+        this.service.create(this.tire);
 
     }
 
@@ -54,7 +59,7 @@ public class TireServiceImplTest {
 
         Tire savedTire = getSavedTire();
         String id = savedTire.getTireId();
-        Tire readTire = this.repository.read(id);
+        Tire readTire = this.service.read(id);
         Assert.assertEquals(savedTire, readTire);
     }
 
@@ -65,16 +70,16 @@ public class TireServiceImplTest {
         String id = saved.getTireId();
         String newName = "Hello";
         saved.setName(newName);
-        this.repository.update(saved);
+        this.service.update(saved);
 
-        Assert.assertEquals(newName,this.repository.read(id).getName());
+        Assert.assertEquals(newName,this.service.read(id).getName());
 
     }
 
     @Test
     public void getAll() {
 
-        Set<Tire> all = this.repository.getAll();
+        Set<Tire> all = this.service.getAll();
         Assert.assertNotNull(all);
 
     }

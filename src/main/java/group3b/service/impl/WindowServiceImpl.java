@@ -22,7 +22,7 @@ public class WindowServiceImpl implements WindowService {
         this.repository = WindowRepositoryImpl.getRepository();
     }
 
-    public WindowService getService(){
+    public static WindowService getService(){
         if (service == null) service = new WindowServiceImpl();
         return service;
     }

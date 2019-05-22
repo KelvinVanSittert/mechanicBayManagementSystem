@@ -4,33 +4,38 @@ import group3b.domain.InspectionBay;
 import group3b.factory.InspectionBayFactory;
 import group3b.repository.InspectionBayRepository;
 import group3b.repository.impl.InspectionBayRepositoryImpl;
+import group3b.service.InspectionBayService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Set;
 
-import static org.junit.Assert.*;
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@RunWith(SpringRunner.class)
 
 public class InspectionBayServiceImplTest {
-    private InspectionBayRepository repository;
+    private InspectionBayService service;
     private InspectionBay inspectionBay;
 
     private InspectionBay getSavedInspectionBay(){
-        Set<InspectionBay> savedInspectionBays = this.repository.getAll();
+        Set<InspectionBay> savedInspectionBays = this.service.getAll();
         return savedInspectionBays.iterator().next();
     }
 
     @Before
     public void setUp() throws Exception{
-        this.repository = InspectionBayRepositoryImpl.getRepository();
+        this.service = InspectionBayServiceImpl.getService();
         this.inspectionBay = InspectionBayFactory.getInspectionBay("Test InspectionBay");
     }
 
     @Test
     public void create() {
 
-        InspectionBay testCreate = this.repository.create(this.inspectionBay);
+        InspectionBay testCreate = this.service.create(this.inspectionBay);
         Assert.assertSame(testCreate, this.inspectionBay);
 
     }
@@ -38,14 +43,14 @@ public class InspectionBayServiceImplTest {
     @Test
     public void delete() {
 
-        int startingSize = this.repository.getAll().size();
+        int startingSize = this.service.getAll().size();
         InspectionBay savedInspectionBay = getSavedInspectionBay();
-        this.repository.delete(savedInspectionBay.getInspectionBayId());
+        this.service.delete(savedInspectionBay.getInspectionBayId());
 
-        Assert.assertEquals(startingSize-1,this.repository.getAll().size());
+        Assert.assertEquals(startingSize-1,this.service.getAll().size());
 
         //Create another inspectionBay after deleting so that Read() has something to read.
-        this.repository.create(this.inspectionBay);
+        this.service.create(this.inspectionBay);
 
     }
 
@@ -54,7 +59,7 @@ public class InspectionBayServiceImplTest {
 
         InspectionBay savedInspectionBay = getSavedInspectionBay();
         String id = savedInspectionBay.getInspectionBayId();
-        InspectionBay readInspectionBay = this.repository.read(id);
+        InspectionBay readInspectionBay = this.service.read(id);
         Assert.assertEquals(savedInspectionBay, readInspectionBay);
     }
 
@@ -65,16 +70,16 @@ public class InspectionBayServiceImplTest {
         String id = saved.getInspectionBayId();
         String newName = "Hello";
         saved.setName(newName);
-        this.repository.update(saved);
+        this.service.update(saved);
 
-        Assert.assertEquals(newName,this.repository.read(id).getName());
+        Assert.assertEquals(newName,this.service.read(id).getName());
 
     }
 
     @Test
     public void getAll() {
 
-        Set<InspectionBay> all = this.repository.getAll();
+        Set<InspectionBay> all = this.service.getAll();
         Assert.assertNotNull(all);
 
     }

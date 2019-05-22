@@ -22,7 +22,7 @@ public class CleanerServiceImpl implements CleanerService {
         this.repository = CleanerRepositoryImpl.getRepository();
     }
 
-    public CleanerService getService(){
+    public static CleanerService getService(){
         if (service == null) service = new CleanerServiceImpl();
         return service;
     }

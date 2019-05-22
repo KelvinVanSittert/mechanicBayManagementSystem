@@ -22,7 +22,7 @@ public class CarServiceImpl implements CarService {
         this.repository = CarRepositoryImpl.getRepository();
     }
 
-    public CarService getService(){
+    public static CarService getService(){
         if (service == null) service = new CarServiceImpl();
         return service;
     }

@@ -4,33 +4,38 @@ import group3b.domain.Vehicle;
 import group3b.factory.VehicleFactory;
 import group3b.repository.VehicleRepository;
 import group3b.repository.impl.VehicleRepositoryImpl;
+import group3b.service.VehicleService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Set;
 
-import static org.junit.Assert.*;
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@RunWith(SpringRunner.class)
 
 public class VehicleServiceImplTest {
-    private VehicleRepository repository;
+    private VehicleService service;
     private Vehicle vehicle;
 
     private Vehicle getSavedVehicle(){
-        Set<Vehicle> savedVehicles = this.repository.getAll();
+        Set<Vehicle> savedVehicles = this.service.getAll();
         return savedVehicles.iterator().next();
     }
 
     @Before
     public void setUp() throws Exception{
-        this.repository = VehicleRepositoryImpl.getRepository();
+        this.service = VehicleServiceImpl.getService();
         this.vehicle = VehicleFactory.getVehicle("Test Vehicle");
     }
 
     @Test
     public void create() {
 
-        Vehicle testCreate = this.repository.create(this.vehicle);
+        Vehicle testCreate = this.service.create(this.vehicle);
         Assert.assertSame(testCreate, this.vehicle);
 
     }
@@ -38,14 +43,14 @@ public class VehicleServiceImplTest {
     @Test
     public void delete() {
 
-        int startingSize = this.repository.getAll().size();
+        int startingSize = this.service.getAll().size();
         Vehicle savedVehicle = getSavedVehicle();
-        this.repository.delete(savedVehicle.getVehicleId());
+        this.service.delete(savedVehicle.getVehicleId());
 
-        Assert.assertEquals(startingSize-1,this.repository.getAll().size());
+        Assert.assertEquals(startingSize-1,this.service.getAll().size());
 
         //Create another vehicle after deleting so that Read() has something to read.
-        this.repository.create(this.vehicle);
+        this.service.create(this.vehicle);
 
     }
 
@@ -54,7 +59,7 @@ public class VehicleServiceImplTest {
 
         Vehicle savedVehicle = getSavedVehicle();
         String id = savedVehicle.getVehicleId();
-        Vehicle readVehicle = this.repository.read(id);
+        Vehicle readVehicle = this.service.read(id);
         Assert.assertEquals(savedVehicle, readVehicle);
     }
 
@@ -65,16 +70,16 @@ public class VehicleServiceImplTest {
         String id = saved.getVehicleId();
         String newName = "Hello";
         saved.setName(newName);
-        this.repository.update(saved);
+        this.service.update(saved);
 
-        Assert.assertEquals(newName,this.repository.read(id).getName());
+        Assert.assertEquals(newName,this.service.read(id).getName());
 
     }
 
     @Test
     public void getAll() {
 
-        Set<Vehicle> all = this.repository.getAll();
+        Set<Vehicle> all = this.service.getAll();
         Assert.assertNotNull(all);
 
     }

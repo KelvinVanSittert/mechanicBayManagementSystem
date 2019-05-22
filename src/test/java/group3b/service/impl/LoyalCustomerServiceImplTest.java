@@ -4,34 +4,39 @@ import group3b.domain.LoyalCustomer;
 import group3b.factory.LoyalCustomerFactory;
 import group3b.repository.LoyalCustomerRepository;
 import group3b.repository.impl.LoyalCustomerRepositoryImpl;
+import group3b.service.LoyalCustomerService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Set;
 
-import static org.junit.Assert.*;
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@RunWith(SpringRunner.class)
 
 public class LoyalCustomerServiceImplTest {
 
-    private LoyalCustomerRepository repository;
+    private LoyalCustomerService service;
     private LoyalCustomer loyalCustomer;
 
     private LoyalCustomer getSavedLoyalCustomer(){
-        Set<LoyalCustomer> savedLoyalCustomers = this.repository.getAll();
+        Set<LoyalCustomer> savedLoyalCustomers = this.service.getAll();
         return savedLoyalCustomers.iterator().next();
     }
 
     @Before
     public void setUp() throws Exception{
-        this.repository = LoyalCustomerRepositoryImpl.getRepository();
+        this.service = LoyalCustomerServiceImpl.getService();
         this.loyalCustomer = LoyalCustomerFactory.getLoyalCustomer("Test LoyalCustomer");
     }
 
     @Test
     public void create() {
 
-        LoyalCustomer testCreate = this.repository.create(this.loyalCustomer);
+        LoyalCustomer testCreate = this.service.create(this.loyalCustomer);
         Assert.assertSame(testCreate, this.loyalCustomer);
 
     }
@@ -39,14 +44,14 @@ public class LoyalCustomerServiceImplTest {
     @Test
     public void delete() {
 
-        int startingSize = this.repository.getAll().size();
+        int startingSize = this.service.getAll().size();
         LoyalCustomer savedLoyalCustomer = getSavedLoyalCustomer();
-        this.repository.delete(savedLoyalCustomer.getLoyalCustomerId());
+        this.service.delete(savedLoyalCustomer.getLoyalCustomerId());
 
-        Assert.assertEquals(startingSize-1,this.repository.getAll().size());
+        Assert.assertEquals(startingSize-1,this.service.getAll().size());
 
         //Create another loyalCustomer after deleting so that Read() has something to read.
-        this.repository.create(this.loyalCustomer);
+        this.service.create(this.loyalCustomer);
 
     }
 
@@ -55,7 +60,7 @@ public class LoyalCustomerServiceImplTest {
 
         LoyalCustomer savedLoyalCustomer = getSavedLoyalCustomer();
         String id = savedLoyalCustomer.getLoyalCustomerId();
-        LoyalCustomer readLoyalCustomer = this.repository.read(id);
+        LoyalCustomer readLoyalCustomer = this.service.read(id);
         Assert.assertEquals(savedLoyalCustomer, readLoyalCustomer);
     }
 
@@ -66,16 +71,16 @@ public class LoyalCustomerServiceImplTest {
         String id = saved.getLoyalCustomerId();
         String newName = "Hello";
         saved.setName(newName);
-        this.repository.update(saved);
+        this.service.update(saved);
 
-        Assert.assertEquals(newName,this.repository.read(id).getName());
+        Assert.assertEquals(newName,this.service.read(id).getName());
 
     }
 
     @Test
     public void getAll() {
 
-        Set<LoyalCustomer> all = this.repository.getAll();
+        Set<LoyalCustomer> all = this.service.getAll();
         Assert.assertNotNull(all);
 
     }

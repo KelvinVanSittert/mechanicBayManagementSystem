@@ -22,7 +22,7 @@ public class SecretaryServiceImpl implements SecretaryService {
         this.repository = SecretaryRepositoryImpl.getRepository();
     }
 
-    public SecretaryService getService(){
+    public static SecretaryService getService(){
         if (service == null) service = new SecretaryServiceImpl();
         return service;
     }

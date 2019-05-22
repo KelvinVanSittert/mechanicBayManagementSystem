@@ -22,7 +22,7 @@ public class QuoteServiceImpl implements QuoteService {
         this.repository = QuoteRepositoryImpl.getRepository();
     }
 
-    public QuoteService getService(){
+    public static QuoteService getService(){
         if (service == null) service = new QuoteServiceImpl();
         return service;
     }

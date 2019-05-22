@@ -22,7 +22,7 @@ public class DoorServiceImpl implements DoorService {
         this.repository = DoorRepositoryImpl.getRepository();
     }
 
-    public DoorService getService(){
+    public static DoorService getService(){
         if (service == null) service = new DoorServiceImpl();
         return service;
     }

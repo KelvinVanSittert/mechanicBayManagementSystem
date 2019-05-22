@@ -22,7 +22,7 @@ public class BikeServiceImpl implements BikeService {
         this.repository = BikeRepositoryImpl.getRepository();
     }
 
-    public BikeService getService(){
+    public static BikeService getService(){
         if (service == null) service = new BikeServiceImpl();
         return service;
     }

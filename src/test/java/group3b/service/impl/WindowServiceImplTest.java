@@ -4,33 +4,38 @@ import group3b.domain.Window;
 import group3b.factory.WindowFactory;
 import group3b.repository.WindowRepository;
 import group3b.repository.impl.WindowRepositoryImpl;
+import group3b.service.WindowService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Set;
 
-import static org.junit.Assert.*;
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@RunWith(SpringRunner.class)
 
 public class WindowServiceImplTest {
-    private WindowRepository repository;
+    private WindowService service;
     private Window window;
 
     private Window getSavedWindow(){
-        Set<Window> savedWindows = this.repository.getAll();
+        Set<Window> savedWindows = this.service.getAll();
         return savedWindows.iterator().next();
     }
 
     @Before
     public void setUp() throws Exception{
-        this.repository = WindowRepositoryImpl.getRepository();
+        this.service = WindowServiceImpl.getService();
         this.window = WindowFactory.getWindow("Test Window");
     }
 
     @Test
     public void create() {
 
-        Window testCreate = this.repository.create(this.window);
+        Window testCreate = this.service.create(this.window);
         Assert.assertSame(testCreate, this.window);
 
     }
@@ -38,14 +43,14 @@ public class WindowServiceImplTest {
     @Test
     public void delete() {
 
-        int startingSize = this.repository.getAll().size();
+        int startingSize = this.service.getAll().size();
         Window savedWindow = getSavedWindow();
-        this.repository.delete(savedWindow.getWindowId());
+        this.service.delete(savedWindow.getWindowId());
 
-        Assert.assertEquals(startingSize-1,this.repository.getAll().size());
+        Assert.assertEquals(startingSize-1,this.service.getAll().size());
 
         //Create another window after deleting so that Read() has something to read.
-        this.repository.create(this.window);
+        this.service.create(this.window);
 
     }
 
@@ -54,7 +59,7 @@ public class WindowServiceImplTest {
 
         Window savedWindow = getSavedWindow();
         String id = savedWindow.getWindowId();
-        Window readWindow = this.repository.read(id);
+        Window readWindow = this.service.read(id);
         Assert.assertEquals(savedWindow, readWindow);
     }
 
@@ -65,16 +70,16 @@ public class WindowServiceImplTest {
         String id = saved.getWindowId();
         String newName = "Hello";
         saved.setName(newName);
-        this.repository.update(saved);
+        this.service.update(saved);
 
-        Assert.assertEquals(newName,this.repository.read(id).getName());
+        Assert.assertEquals(newName,this.service.read(id).getName());
 
     }
 
     @Test
     public void getAll() {
 
-        Set<Window> all = this.repository.getAll();
+        Set<Window> all = this.service.getAll();
         Assert.assertNotNull(all);
 
     }

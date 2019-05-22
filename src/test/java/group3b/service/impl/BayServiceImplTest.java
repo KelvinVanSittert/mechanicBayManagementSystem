@@ -1,22 +1,16 @@
 package group3b.service.impl;
 
-import group3b.repository.impl.BayRepositoryImpl;
+import group3b.service.BayService;
 import org.junit.Test;
 
 import group3b.domain.Bay;
 import group3b.factory.BayFactory;
-import group3b.repository.BayRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.client.HttpClientErrorException;
-
 
 
 import java.util.Set;
@@ -26,25 +20,24 @@ import java.util.Set;
 
 public class BayServiceImplTest {
 
-    @Autowired
-    private BayRepository repository;
+    private BayService service;
     private Bay bay;
 
     private Bay getSavedBay(){
-        Set<Bay> savedBays = this.repository.getAll();
+        Set<Bay> savedBays = this.service.getAll();
         return savedBays.iterator().next();
     }
 
     @Before
     public void setUp() throws Exception{
-        this.repository = BayRepositoryImpl.getRepository();
+        this.service = BayServiceImpl.getService();
         this.bay = BayFactory.getBay("Test Bay");
     }
 
     @Test
     public void create() {
 
-        Bay testCreate = this.repository.create(this.bay);
+        Bay testCreate = this.service.create(this.bay);
         Assert.assertSame(testCreate, this.bay);
 
     }
@@ -55,34 +48,34 @@ public class BayServiceImplTest {
         String id = saved.getBayId();
         String newName = "Hello";
         saved.setName(newName);
-        this.repository.update(saved);
+        this.service.update(saved);
 
-        Assert.assertEquals(newName,this.repository.read(id).getName());
+        Assert.assertEquals(newName,this.service.read(id).getName());
     }
 
     @Test
     public void delete() {
-        int startingSize = this.repository.getAll().size();
+        int startingSize = this.service.getAll().size();
         Bay savedBay = getSavedBay();
-        this.repository.delete(savedBay.getBayId());
+        this.service.delete(savedBay.getBayId());
 
-        Assert.assertEquals(startingSize-1,this.repository.getAll().size());
+        Assert.assertEquals(startingSize-1,this.service.getAll().size());
 
         //Create another bay after deleting so that Read() has something to read.
-        this.repository.create(this.bay);
+        this.service.create(this.bay);
     }
 
     @Test
     public void read() {
         Bay savedBay = getSavedBay();
         String id = savedBay.getBayId();
-        Bay readBay = this.repository.read(id);
+        Bay readBay = this.service.read(id);
         Assert.assertEquals(savedBay, readBay);
     }
 
     @Test
     public void getAll() {
-        Set<Bay> all = this.repository.getAll();
+        Set<Bay> all = this.service.getAll();
         Assert.assertNotNull(all);
     }
 

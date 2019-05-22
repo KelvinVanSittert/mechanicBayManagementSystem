@@ -22,7 +22,7 @@ public class SeniorMechanicServiceImpl implements SeniorMechanicService {
         this.repository = SeniorMechanicRepositoryImpl.getRepository();
     }
 
-    public SeniorMechanicService getService(){
+    public static SeniorMechanicService getService(){
         if (service == null) service = new SeniorMechanicServiceImpl();
         return service;
     }

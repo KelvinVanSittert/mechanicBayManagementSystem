@@ -4,34 +4,39 @@ import group3b.domain.Manager;
 import group3b.factory.ManagerFactory;
 import group3b.repository.ManagerRepository;
 import group3b.repository.impl.ManagerRepositoryImpl;
+import group3b.service.ManagerService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Set;
 
-import static org.junit.Assert.*;
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@RunWith(SpringRunner.class)
 
 public class ManagerServiceImplTest {
 
-    private ManagerRepository repository;
+    private ManagerService service;
     private Manager manager;
 
     private Manager getSavedManager(){
-        Set<Manager> savedManagers = this.repository.getAll();
+        Set<Manager> savedManagers = this.service.getAll();
         return savedManagers.iterator().next();
     }
 
     @Before
     public void setUp() throws Exception{
-        this.repository = ManagerRepositoryImpl.getRepository();
+        this.service = ManagerServiceImpl.getService();
         this.manager = ManagerFactory.getManager("Test Manager");
     }
 
     @Test
     public void create() {
 
-        Manager testCreate = this.repository.create(this.manager);
+        Manager testCreate = this.service.create(this.manager);
         Assert.assertSame(testCreate, this.manager);
 
     }
@@ -39,14 +44,14 @@ public class ManagerServiceImplTest {
     @Test
     public void delete() {
 
-        int startingSize = this.repository.getAll().size();
+        int startingSize = this.service.getAll().size();
         Manager savedManager = getSavedManager();
-        this.repository.delete(savedManager.getManagerId());
+        this.service.delete(savedManager.getManagerId());
 
-        Assert.assertEquals(startingSize-1,this.repository.getAll().size());
+        Assert.assertEquals(startingSize-1,this.service.getAll().size());
 
         //Create another manager after deleting so that Read() has something to read.
-        this.repository.create(this.manager);
+        this.service.create(this.manager);
 
     }
 
@@ -55,7 +60,7 @@ public class ManagerServiceImplTest {
 
         Manager savedManager = getSavedManager();
         String id = savedManager.getManagerId();
-        Manager readManager = this.repository.read(id);
+        Manager readManager = this.service.read(id);
         Assert.assertEquals(savedManager, readManager);
     }
 
@@ -66,16 +71,16 @@ public class ManagerServiceImplTest {
         String id = saved.getManagerId();
         String newName = "Hello";
         saved.setName(newName);
-        this.repository.update(saved);
+        this.service.update(saved);
 
-        Assert.assertEquals(newName,this.repository.read(id).getName());
+        Assert.assertEquals(newName,this.service.read(id).getName());
 
     }
 
     @Test
     public void getAll() {
 
-        Set<Manager> all = this.repository.getAll();
+        Set<Manager> all = this.service.getAll();
         Assert.assertNotNull(all);
 
     }

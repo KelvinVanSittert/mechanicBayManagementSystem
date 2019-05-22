@@ -4,34 +4,39 @@ import group3b.domain.Employee;
 import group3b.factory.EmployeeFactory;
 import group3b.repository.EmployeeRepository;
 import group3b.repository.impl.EmployeeRepositoryImpl;
+import group3b.service.EmployeeService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Set;
 
-import static org.junit.Assert.*;
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@RunWith(SpringRunner.class)
 
 public class EmployeeServiceImplTest {
 
-    private EmployeeRepository repository;
+    private EmployeeService service;
     private Employee employee;
 
     private Employee getSavedEmployee(){
-        Set<Employee> savedEmployees = this.repository.getAll();
+        Set<Employee> savedEmployees = this.service.getAll();
         return savedEmployees.iterator().next();
     }
 
     @Before
     public void setUp() throws Exception{
-        this.repository = EmployeeRepositoryImpl.getRepository();
+        this.service = EmployeeServiceImpl.getService();
         this.employee = EmployeeFactory.getEmployee("Test Employee");
     }
 
     @Test
     public void create() {
 
-        Employee testCreate = this.repository.create(this.employee);
+        Employee testCreate = this.service.create(this.employee);
         Assert.assertSame(testCreate, this.employee);
 
     }
@@ -39,14 +44,14 @@ public class EmployeeServiceImplTest {
     @Test
     public void delete() {
 
-        int startingSize = this.repository.getAll().size();
+        int startingSize = this.service.getAll().size();
         Employee savedEmployee = getSavedEmployee();
-        this.repository.delete(savedEmployee.getEmployeeId());
+        this.service.delete(savedEmployee.getEmployeeId());
 
-        Assert.assertEquals(startingSize-1,this.repository.getAll().size());
+        Assert.assertEquals(startingSize-1,this.service.getAll().size());
 
         //Create another employee after deleting so that Read() has something to read.
-        this.repository.create(this.employee);
+        this.service.create(this.employee);
 
     }
 
@@ -55,7 +60,7 @@ public class EmployeeServiceImplTest {
 
         Employee savedEmployee = getSavedEmployee();
         String id = savedEmployee.getEmployeeId();
-        Employee readEmployee = this.repository.read(id);
+        Employee readEmployee = this.service.read(id);
         Assert.assertEquals(savedEmployee, readEmployee);
     }
 
@@ -66,16 +71,16 @@ public class EmployeeServiceImplTest {
         String id = saved.getEmployeeId();
         String newName = "Hello";
         saved.setName(newName);
-        this.repository.update(saved);
+        this.service.update(saved);
 
-        Assert.assertEquals(newName,this.repository.read(id).getName());
+        Assert.assertEquals(newName,this.service.read(id).getName());
 
     }
 
     @Test
     public void getAll() {
 
-        Set<Employee> all = this.repository.getAll();
+        Set<Employee> all = this.service.getAll();
         Assert.assertNotNull(all);
 
     }

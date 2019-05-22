@@ -4,34 +4,39 @@ import group3b.domain.ParkingBay;
 import group3b.factory.ParkingBayFactory;
 import group3b.repository.ParkingBayRepository;
 import group3b.repository.impl.ParkingBayRepositoryImpl;
+import group3b.service.ParkingBayService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Set;
 
-import static org.junit.Assert.*;
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@RunWith(SpringRunner.class)
 
 public class ParkingBayServiceImplTest {
 
-    private ParkingBayRepository repository;
+    private ParkingBayService service;
     private ParkingBay parkingBay;
 
     private ParkingBay getSavedParkingBay(){
-        Set<ParkingBay> savedParkingBays = this.repository.getAll();
+        Set<ParkingBay> savedParkingBays = this.service.getAll();
         return savedParkingBays.iterator().next();
     }
 
     @Before
     public void setUp() throws Exception{
-        this.repository = ParkingBayRepositoryImpl.getRepository();
+        this.service = ParkingBayServiceImpl.getService();
         this.parkingBay = ParkingBayFactory.getParkingBay("Test ParkingBay");
     }
 
     @Test
     public void create() {
 
-        ParkingBay testCreate = this.repository.create(this.parkingBay);
+        ParkingBay testCreate = this.service.create(this.parkingBay);
         Assert.assertSame(testCreate, this.parkingBay);
 
     }
@@ -39,14 +44,14 @@ public class ParkingBayServiceImplTest {
     @Test
     public void delete() {
 
-        int startingSize = this.repository.getAll().size();
+        int startingSize = this.service.getAll().size();
         ParkingBay savedParkingBay = getSavedParkingBay();
-        this.repository.delete(savedParkingBay.getParkingBayId());
+        this.service.delete(savedParkingBay.getParkingBayId());
 
-        Assert.assertEquals(startingSize-1,this.repository.getAll().size());
+        Assert.assertEquals(startingSize-1,this.service.getAll().size());
 
         //Create another parkingBay after deleting so that Read() has something to read.
-        this.repository.create(this.parkingBay);
+        this.service.create(this.parkingBay);
 
     }
 
@@ -55,7 +60,7 @@ public class ParkingBayServiceImplTest {
 
         ParkingBay savedParkingBay = getSavedParkingBay();
         String id = savedParkingBay.getParkingBayId();
-        ParkingBay readParkingBay = this.repository.read(id);
+        ParkingBay readParkingBay = this.service.read(id);
         Assert.assertEquals(savedParkingBay, readParkingBay);
     }
 
@@ -66,16 +71,16 @@ public class ParkingBayServiceImplTest {
         String id = saved.getParkingBayId();
         String newName = "Hello";
         saved.setName(newName);
-        this.repository.update(saved);
+        this.service.update(saved);
 
-        Assert.assertEquals(newName,this.repository.read(id).getName());
+        Assert.assertEquals(newName,this.service.read(id).getName());
 
     }
 
     @Test
     public void getAll() {
 
-        Set<ParkingBay> all = this.repository.getAll();
+        Set<ParkingBay> all = this.service.getAll();
         Assert.assertNotNull(all);
 
     }

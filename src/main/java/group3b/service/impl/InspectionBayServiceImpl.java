@@ -22,7 +22,7 @@ public class InspectionBayServiceImpl implements InspectionBayService {
         this.repository = InspectionBayRepositoryImpl.getRepository();
     }
 
-    public InspectionBayService getService(){
+    public static InspectionBayService getService(){
         if (service == null) service = new InspectionBayServiceImpl();
         return service;
     }

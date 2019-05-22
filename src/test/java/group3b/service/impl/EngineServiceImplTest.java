@@ -4,33 +4,38 @@ import group3b.domain.Engine;
 import group3b.factory.EngineFactory;
 import group3b.repository.EngineRepository;
 import group3b.repository.impl.EngineRepositoryImpl;
+import group3b.service.EngineService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Set;
 
-import static org.junit.Assert.*;
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@RunWith(SpringRunner.class)
 
 public class EngineServiceImplTest {
-    private EngineRepository repository;
+    private EngineService service;
     private Engine engine;
 
     private Engine getSavedEngine(){
-        Set<Engine> savedEngines = this.repository.getAll();
+        Set<Engine> savedEngines = this.service.getAll();
         return savedEngines.iterator().next();
     }
 
     @Before
     public void setUp() throws Exception{
-        this.repository = EngineRepositoryImpl.getRepository();
+        this.service = EngineServiceImpl.getService();
         this.engine = EngineFactory.getEngine("Test Engine");
     }
 
     @Test
     public void create() {
 
-        Engine testCreate = this.repository.create(this.engine);
+        Engine testCreate = this.service.create(this.engine);
         Assert.assertSame(testCreate, this.engine);
 
     }
@@ -38,14 +43,14 @@ public class EngineServiceImplTest {
     @Test
     public void delete() {
 
-        int startingSize = this.repository.getAll().size();
+        int startingSize = this.service.getAll().size();
         Engine savedEngine = getSavedEngine();
-        this.repository.delete(savedEngine.getEngineId());
+        this.service.delete(savedEngine.getEngineId());
 
-        Assert.assertEquals(startingSize-1,this.repository.getAll().size());
+        Assert.assertEquals(startingSize-1,this.service.getAll().size());
 
         //Create another engine after deleting so that Read() has something to read.
-        this.repository.create(this.engine);
+        this.service.create(this.engine);
 
     }
 
@@ -54,7 +59,7 @@ public class EngineServiceImplTest {
 
         Engine savedEngine = getSavedEngine();
         String id = savedEngine.getEngineId();
-        Engine readEngine = this.repository.read(id);
+        Engine readEngine = this.service.read(id);
         Assert.assertEquals(savedEngine, readEngine);
     }
 
@@ -65,16 +70,16 @@ public class EngineServiceImplTest {
         String id = saved.getEngineId();
         String newName = "Hello";
         saved.setName(newName);
-        this.repository.update(saved);
+        this.service.update(saved);
 
-        Assert.assertEquals(newName,this.repository.read(id).getName());
+        Assert.assertEquals(newName,this.service.read(id).getName());
 
     }
 
     @Test
     public void getAll() {
 
-        Set<Engine> all = this.repository.getAll();
+        Set<Engine> all = this.service.getAll();
         Assert.assertNotNull(all);
 
     }

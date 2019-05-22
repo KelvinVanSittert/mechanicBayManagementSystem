@@ -4,34 +4,39 @@ import group3b.domain.Mechanic;
 import group3b.factory.MechanicFactory;
 import group3b.repository.MechanicRepository;
 import group3b.repository.impl.MechanicRepositoryImpl;
+import group3b.service.MechanicService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Set;
 
-import static org.junit.Assert.*;
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@RunWith(SpringRunner.class)
 
 public class MechanicServiceImplTest {
 
-    private MechanicRepository repository;
+    private MechanicService service;
     private Mechanic mechanic;
 
     private Mechanic getSavedMechanic(){
-        Set<Mechanic> savedMechanics = this.repository.getAll();
+        Set<Mechanic> savedMechanics = this.service.getAll();
         return savedMechanics.iterator().next();
     }
 
     @Before
     public void setUp() throws Exception{
-        this.repository = MechanicRepositoryImpl.getRepository();
+        this.service = MechanicServiceImpl.getService();
         this.mechanic = MechanicFactory.getMechanic("Test Mechanic");
     }
 
     @Test
     public void create() {
 
-        Mechanic testCreate = this.repository.create(this.mechanic);
+        Mechanic testCreate = this.service.create(this.mechanic);
         Assert.assertSame(testCreate, this.mechanic);
 
     }
@@ -39,14 +44,14 @@ public class MechanicServiceImplTest {
     @Test
     public void delete() {
 
-        int startingSize = this.repository.getAll().size();
+        int startingSize = this.service.getAll().size();
         Mechanic savedMechanic = getSavedMechanic();
-        this.repository.delete(savedMechanic.getMechanicId());
+        this.service.delete(savedMechanic.getMechanicId());
 
-        Assert.assertEquals(startingSize-1,this.repository.getAll().size());
+        Assert.assertEquals(startingSize-1,this.service.getAll().size());
 
         //Create another mechanic after deleting so that Read() has something to read.
-        this.repository.create(this.mechanic);
+        this.service.create(this.mechanic);
 
     }
 
@@ -55,7 +60,7 @@ public class MechanicServiceImplTest {
 
         Mechanic savedMechanic = getSavedMechanic();
         String id = savedMechanic.getMechanicId();
-        Mechanic readMechanic = this.repository.read(id);
+        Mechanic readMechanic = this.service.read(id);
         Assert.assertEquals(savedMechanic, readMechanic);
     }
 
@@ -66,16 +71,16 @@ public class MechanicServiceImplTest {
         String id = saved.getMechanicId();
         String newName = "Hello";
         saved.setName(newName);
-        this.repository.update(saved);
+        this.service.update(saved);
 
-        Assert.assertEquals(newName,this.repository.read(id).getName());
+        Assert.assertEquals(newName,this.service.read(id).getName());
 
     }
 
     @Test
     public void getAll() {
 
-        Set<Mechanic> all = this.repository.getAll();
+        Set<Mechanic> all = this.service.getAll();
         Assert.assertNotNull(all);
 
     }

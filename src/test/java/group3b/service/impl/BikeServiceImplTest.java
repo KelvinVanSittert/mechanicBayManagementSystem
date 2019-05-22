@@ -4,12 +4,14 @@ import group3b.domain.Bike;
 import group3b.factory.BikeFactory;
 import group3b.repository.BikeRepository;
 import group3b.repository.impl.BikeRepositoryImpl;
+import group3b.service.BikeService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -22,7 +24,8 @@ import static org.junit.Assert.*;
 
 public class BikeServiceImplTest {
 
-    private BikeRepository service;
+    @Autowired
+    private BikeService service;
     private Bike bike;
 
     private Bike getSavedBike(){
@@ -32,7 +35,7 @@ public class BikeServiceImplTest {
 
     @Before
     public void setUp() throws Exception{
-        this.service = BikeRepositoryImpl.getRepository();
+        this.service = BikeServiceImpl.getService();
         this.bike = BikeFactory.getBike("Test Bike");
     }
 

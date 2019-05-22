@@ -22,7 +22,7 @@ public class MechanicServiceImpl implements MechanicService {
         this.repository = MechanicRepositoryImpl.getRepository();
     }
 
-    public MechanicService getService(){
+    public static MechanicService getService(){
         if (service == null) service = new MechanicServiceImpl();
         return service;
     }

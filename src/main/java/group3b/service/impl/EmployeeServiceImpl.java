@@ -22,7 +22,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.repository = EmployeeRepositoryImpl.getRepository();
     }
 
-    public EmployeeService getService(){
+    public static EmployeeService getService(){
         if (service == null) service = new EmployeeServiceImpl();
         return service;
     }

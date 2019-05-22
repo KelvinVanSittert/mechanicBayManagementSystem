@@ -4,34 +4,39 @@ import group3b.domain.TraineeMechanic;
 import group3b.factory.TraineeMechanicFactory;
 import group3b.repository.TraineeMechanicRepository;
 import group3b.repository.impl.TraineeMechanicRepositoryImpl;
+import group3b.service.TraineeMechanicService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Set;
 
-import static org.junit.Assert.*;
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@RunWith(SpringRunner.class)
 
 public class TraineeMechanicServiceImplTest {
 
-    private TraineeMechanicRepository repository;
+    private TraineeMechanicService service;
     private TraineeMechanic traineeMechanic;
 
     private TraineeMechanic getSavedTraineeMechanic(){
-        Set<TraineeMechanic> savedTraineeMechanics = this.repository.getAll();
+        Set<TraineeMechanic> savedTraineeMechanics = this.service.getAll();
         return savedTraineeMechanics.iterator().next();
     }
 
     @Before
     public void setUp() throws Exception{
-        this.repository = TraineeMechanicRepositoryImpl.getRepository();
+        this.service = TraineeMechanicServiceImpl.getService();
         this.traineeMechanic = TraineeMechanicFactory.getTraineeMechanic("Test TraineeMechanic");
     }
 
     @Test
     public void create() {
 
-        TraineeMechanic testCreate = this.repository.create(this.traineeMechanic);
+        TraineeMechanic testCreate = this.service.create(this.traineeMechanic);
         Assert.assertSame(testCreate, this.traineeMechanic);
 
     }
@@ -39,14 +44,14 @@ public class TraineeMechanicServiceImplTest {
     @Test
     public void delete() {
 
-        int startingSize = this.repository.getAll().size();
+        int startingSize = this.service.getAll().size();
         TraineeMechanic savedTraineeMechanic = getSavedTraineeMechanic();
-        this.repository.delete(savedTraineeMechanic.getTraineeMechanicId());
+        this.service.delete(savedTraineeMechanic.getTraineeMechanicId());
 
-        Assert.assertEquals(startingSize-1,this.repository.getAll().size());
+        Assert.assertEquals(startingSize-1,this.service.getAll().size());
 
         //Create another traineeMechanic after deleting so that Read() has something to read.
-        this.repository.create(this.traineeMechanic);
+        this.service.create(this.traineeMechanic);
 
     }
 
@@ -55,7 +60,7 @@ public class TraineeMechanicServiceImplTest {
 
         TraineeMechanic savedTraineeMechanic = getSavedTraineeMechanic();
         String id = savedTraineeMechanic.getTraineeMechanicId();
-        TraineeMechanic readTraineeMechanic = this.repository.read(id);
+        TraineeMechanic readTraineeMechanic = this.service.read(id);
         Assert.assertEquals(savedTraineeMechanic, readTraineeMechanic);
     }
 
@@ -66,16 +71,16 @@ public class TraineeMechanicServiceImplTest {
         String id = saved.getTraineeMechanicId();
         String newName = "Hello";
         saved.setName(newName);
-        this.repository.update(saved);
+        this.service.update(saved);
 
-        Assert.assertEquals(newName,this.repository.read(id).getName());
+        Assert.assertEquals(newName,this.service.read(id).getName());
 
     }
 
     @Test
     public void getAll() {
 
-        Set<TraineeMechanic> all = this.repository.getAll();
+        Set<TraineeMechanic> all = this.service.getAll();
         Assert.assertNotNull(all);
 
     }

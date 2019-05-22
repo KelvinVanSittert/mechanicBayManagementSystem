@@ -22,7 +22,7 @@ public class LoyalCustomerServiceImpl implements LoyalCustomerService {
         this.repository = LoyalCustomerRepositoryImpl.getRepository();
     }
 
-    public LoyalCustomerService getService(){
+    public static LoyalCustomerService getService(){
         if (service == null) service = new LoyalCustomerServiceImpl();
         return service;
     }

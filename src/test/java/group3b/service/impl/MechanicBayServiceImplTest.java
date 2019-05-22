@@ -4,33 +4,38 @@ import group3b.domain.MechanicBay;
 import group3b.factory.MechanicBayFactory;
 import group3b.repository.MechanicBayRepository;
 import group3b.repository.impl.MechanicBayRepositoryImpl;
+import group3b.service.MechanicBayService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Set;
 
-import static org.junit.Assert.*;
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@RunWith(SpringRunner.class)
 
 public class MechanicBayServiceImplTest {
-    private MechanicBayRepository repository;
+    private MechanicBayService service;
     private MechanicBay mechanicBay;
 
     private MechanicBay getSavedMechanicBay(){
-        Set<MechanicBay> savedMechanicBays = this.repository.getAll();
+        Set<MechanicBay> savedMechanicBays = this.service.getAll();
         return savedMechanicBays.iterator().next();
     }
 
     @Before
     public void setUp() throws Exception{
-        this.repository = MechanicBayRepositoryImpl.getRepository();
+        this.service = MechanicBayServiceImpl.getService();
         this.mechanicBay = MechanicBayFactory.getMechanicBay("Test MechanicBay");
     }
 
     @Test
     public void create() {
 
-        MechanicBay testCreate = this.repository.create(this.mechanicBay);
+        MechanicBay testCreate = this.service.create(this.mechanicBay);
         Assert.assertSame(testCreate, this.mechanicBay);
 
     }
@@ -38,14 +43,14 @@ public class MechanicBayServiceImplTest {
     @Test
     public void delete() {
 
-        int startingSize = this.repository.getAll().size();
+        int startingSize = this.service.getAll().size();
         MechanicBay savedMechanicBay = getSavedMechanicBay();
-        this.repository.delete(savedMechanicBay.getMechanicBayId());
+        this.service.delete(savedMechanicBay.getMechanicBayId());
 
-        Assert.assertEquals(startingSize-1,this.repository.getAll().size());
+        Assert.assertEquals(startingSize-1,this.service.getAll().size());
 
         //Create another mechanicBay after deleting so that Read() has something to read.
-        this.repository.create(this.mechanicBay);
+        this.service.create(this.mechanicBay);
 
     }
 
@@ -54,7 +59,7 @@ public class MechanicBayServiceImplTest {
 
         MechanicBay savedMechanicBay = getSavedMechanicBay();
         String id = savedMechanicBay.getMechanicBayId();
-        MechanicBay readMechanicBay = this.repository.read(id);
+        MechanicBay readMechanicBay = this.service.read(id);
         Assert.assertEquals(savedMechanicBay, readMechanicBay);
     }
 
@@ -65,16 +70,16 @@ public class MechanicBayServiceImplTest {
         String id = saved.getMechanicBayId();
         String newName = "Hello";
         saved.setName(newName);
-        this.repository.update(saved);
+        this.service.update(saved);
 
-        Assert.assertEquals(newName,this.repository.read(id).getName());
+        Assert.assertEquals(newName,this.service.read(id).getName());
 
     }
 
     @Test
     public void getAll() {
 
-        Set<MechanicBay> all = this.repository.getAll();
+        Set<MechanicBay> all = this.service.getAll();
         Assert.assertNotNull(all);
 
     }

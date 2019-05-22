@@ -4,34 +4,39 @@ import group3b.domain.Customer;
 import group3b.factory.CustomerFactory;
 import group3b.repository.CustomerRepository;
 import group3b.repository.impl.CustomerRepositoryImpl;
+import group3b.service.CustomerService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Set;
 
-import static org.junit.Assert.*;
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@RunWith(SpringRunner.class)
 
 public class CustomerServiceImplTest {
 
-    private CustomerRepository repository;
+    private CustomerService service;
     private Customer customer;
 
     private Customer getSavedCustomer(){
-        Set<Customer> savedCustomers = this.repository.getAll();
+        Set<Customer> savedCustomers = this.service.getAll();
         return savedCustomers.iterator().next();
     }
 
     @Before
     public void setUp() throws Exception{
-        this.repository = CustomerRepositoryImpl.getRepository();
+        this.service = CustomerServiceImpl.getService();
         this.customer = CustomerFactory.getCustomer("Test Customer");
     }
 
     @Test
     public void create() {
 
-        Customer testCreate = this.repository.create(this.customer);
+        Customer testCreate = this.service.create(this.customer);
         Assert.assertSame(testCreate, this.customer);
 
     }
@@ -39,14 +44,14 @@ public class CustomerServiceImplTest {
     @Test
     public void delete() {
 
-        int startingSize = this.repository.getAll().size();
+        int startingSize = this.service.getAll().size();
         Customer savedCustomer = getSavedCustomer();
-        this.repository.delete(savedCustomer.getCustomerId());
+        this.service.delete(savedCustomer.getCustomerId());
 
-        Assert.assertEquals(startingSize-1,this.repository.getAll().size());
+        Assert.assertEquals(startingSize-1,this.service.getAll().size());
 
         //Create another customer after deleting so that Read() has something to read.
-        this.repository.create(this.customer);
+        this.service.create(this.customer);
 
     }
 
@@ -55,7 +60,7 @@ public class CustomerServiceImplTest {
 
         Customer savedCustomer = getSavedCustomer();
         String id = savedCustomer.getCustomerId();
-        Customer readCustomer = this.repository.read(id);
+        Customer readCustomer = this.service.read(id);
         Assert.assertEquals(savedCustomer, readCustomer);
     }
 
@@ -66,16 +71,16 @@ public class CustomerServiceImplTest {
         String id = saved.getCustomerId();
         String newName = "Hello";
         saved.setName(newName);
-        this.repository.update(saved);
+        this.service.update(saved);
 
-        Assert.assertEquals(newName,this.repository.read(id).getName());
+        Assert.assertEquals(newName,this.service.read(id).getName());
 
     }
 
     @Test
     public void getAll() {
 
-        Set<Customer> all = this.repository.getAll();
+        Set<Customer> all = this.service.getAll();
         Assert.assertNotNull(all);
 
     }

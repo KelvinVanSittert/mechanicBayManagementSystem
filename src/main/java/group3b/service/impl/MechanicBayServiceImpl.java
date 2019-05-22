@@ -22,7 +22,7 @@ public class MechanicBayServiceImpl implements MechanicBayService {
         this.repository = MechanicBayRepositoryImpl.getRepository();
     }
 
-    public MechanicBayService getService(){
+    public static MechanicBayService getService(){
         if (service == null) service = new MechanicBayServiceImpl();
         return service;
     }

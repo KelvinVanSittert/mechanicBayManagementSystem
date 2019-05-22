@@ -4,33 +4,38 @@ import group3b.domain.Truck;
 import group3b.factory.TruckFactory;
 import group3b.repository.TruckRepository;
 import group3b.repository.impl.TruckRepositoryImpl;
+import group3b.service.TruckService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Set;
 
-import static org.junit.Assert.*;
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@RunWith(SpringRunner.class)
 
 public class TruckServiceImplTest {
-    private TruckRepository repository;
+    private TruckService service;
     private Truck truck;
 
     private Truck getSavedTruck(){
-        Set<Truck> savedTrucks = this.repository.getAll();
+        Set<Truck> savedTrucks = this.service.getAll();
         return savedTrucks.iterator().next();
     }
 
     @Before
     public void setUp() throws Exception{
-        this.repository = TruckRepositoryImpl.getRepository();
+        this.service = TruckServiceImpl.getService();
         this.truck = TruckFactory.getTruck("Test Truck");
     }
 
     @Test
     public void create() {
 
-        Truck testCreate = this.repository.create(this.truck);
+        Truck testCreate = this.service.create(this.truck);
         Assert.assertSame(testCreate, this.truck);
 
     }
@@ -38,14 +43,14 @@ public class TruckServiceImplTest {
     @Test
     public void delete() {
 
-        int startingSize = this.repository.getAll().size();
+        int startingSize = this.service.getAll().size();
         Truck savedTruck = getSavedTruck();
-        this.repository.delete(savedTruck.getTruckId());
+        this.service.delete(savedTruck.getTruckId());
 
-        Assert.assertEquals(startingSize-1,this.repository.getAll().size());
+        Assert.assertEquals(startingSize-1,this.service.getAll().size());
 
         //Create another truck after deleting so that Read() has something to read.
-        this.repository.create(this.truck);
+        this.service.create(this.truck);
 
     }
 
@@ -54,7 +59,7 @@ public class TruckServiceImplTest {
 
         Truck savedTruck = getSavedTruck();
         String id = savedTruck.getTruckId();
-        Truck readTruck = this.repository.read(id);
+        Truck readTruck = this.service.read(id);
         Assert.assertEquals(savedTruck, readTruck);
     }
 
@@ -65,16 +70,16 @@ public class TruckServiceImplTest {
         String id = saved.getTruckId();
         String newName = "Hello";
         saved.setName(newName);
-        this.repository.update(saved);
+        this.service.update(saved);
 
-        Assert.assertEquals(newName,this.repository.read(id).getName());
+        Assert.assertEquals(newName,this.service.read(id).getName());
 
     }
 
     @Test
     public void getAll() {
 
-        Set<Truck> all = this.repository.getAll();
+        Set<Truck> all = this.service.getAll();
         Assert.assertNotNull(all);
 
     }

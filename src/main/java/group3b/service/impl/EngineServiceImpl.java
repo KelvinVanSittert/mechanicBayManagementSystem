@@ -22,7 +22,7 @@ public class EngineServiceImpl implements EngineService {
         this.repository = EngineRepositoryImpl.getRepository();
     }
 
-    public EngineService getService(){
+    public static EngineService getService(){
         if (service == null) service = new EngineServiceImpl();
         return service;
     }

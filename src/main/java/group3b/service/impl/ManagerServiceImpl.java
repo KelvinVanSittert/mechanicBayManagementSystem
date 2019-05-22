@@ -22,7 +22,7 @@ public class ManagerServiceImpl implements ManagerService {
         this.repository = ManagerRepositoryImpl.getRepository();
     }
 
-    public ManagerService getService(){
+    public static ManagerService getService(){
         if (service == null) service = new ManagerServiceImpl();
         return service;
     }

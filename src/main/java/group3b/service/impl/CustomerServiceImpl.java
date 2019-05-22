@@ -23,7 +23,7 @@ public class CustomerServiceImpl implements CustomerService {
         this.repository = CustomerRepositoryImpl.getRepository();
     }
 
-    public CustomerService getService(){
+    public static CustomerService getService(){
         if (service == null) service = new CustomerServiceImpl();
         return service;
     }

@@ -22,7 +22,7 @@ public class TraineeMechanicServiceImpl implements TraineeMechanicService {
         this.repository = TraineeMechanicRepositoryImpl.getRepository();
     }
 
-    public TraineeMechanicService getService(){
+    public static TraineeMechanicService getService(){
         if (service == null) service = new TraineeMechanicServiceImpl();
         return service;
     }

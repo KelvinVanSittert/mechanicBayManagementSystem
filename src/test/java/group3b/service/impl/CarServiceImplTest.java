@@ -4,33 +4,38 @@ import group3b.domain.Car;
 import group3b.factory.CarFactory;
 import group3b.repository.CarRepository;
 import group3b.repository.impl.CarRepositoryImpl;
+import group3b.service.CarService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Set;
 
-import static org.junit.Assert.*;
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@RunWith(SpringRunner.class)
 
 public class CarServiceImplTest {
-    private CarRepository repository;
+    private CarService service;
     private Car car;
 
     private Car getSavedCar(){
-        Set<Car> savedCars = this.repository.getAll();
+        Set<Car> savedCars = this.service.getAll();
         return savedCars.iterator().next();
     }
 
     @Before
     public void setUp() throws Exception{
-        this.repository = CarRepositoryImpl.getRepository();
+        this.service = CarServiceImpl.getService();
         this.car = CarFactory.getCar("Test Car");
     }
 
     @Test
     public void create() {
 
-        Car testCreate = this.repository.create(this.car);
+        Car testCreate = this.service.create(this.car);
         Assert.assertSame(testCreate, this.car);
 
     }
@@ -38,14 +43,14 @@ public class CarServiceImplTest {
     @Test
     public void delete() {
 
-        int startingSize = this.repository.getAll().size();
+        int startingSize = this.service.getAll().size();
         Car savedCar = getSavedCar();
-        this.repository.delete(savedCar.getCarId());
+        this.service.delete(savedCar.getCarId());
 
-        Assert.assertEquals(startingSize-1,this.repository.getAll().size());
+        Assert.assertEquals(startingSize-1,this.service.getAll().size());
 
         //Create another car after deleting so that Read() has something to read.
-        this.repository.create(this.car);
+        this.service.create(this.car);
 
     }
 
@@ -54,7 +59,7 @@ public class CarServiceImplTest {
 
         Car savedCar = getSavedCar();
         String id = savedCar.getCarId();
-        Car readCar = this.repository.read(id);
+        Car readCar = this.service.read(id);
         Assert.assertEquals(savedCar, readCar);
     }
 
@@ -65,16 +70,16 @@ public class CarServiceImplTest {
         String id = saved.getCarId();
         String newName = "Hello";
         saved.setName(newName);
-        this.repository.update(saved);
+        this.service.update(saved);
 
-        Assert.assertEquals(newName,this.repository.read(id).getName());
+        Assert.assertEquals(newName,this.service.read(id).getName());
 
     }
 
     @Test
     public void getAll() {
 
-        Set<Car> all = this.repository.getAll();
+        Set<Car> all = this.service.getAll();
         Assert.assertNotNull(all);
 
     }

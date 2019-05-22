@@ -4,33 +4,38 @@ import group3b.domain.Quote;
 import group3b.factory.QuoteFactory;
 import group3b.repository.QuoteRepository;
 import group3b.repository.impl.QuoteRepositoryImpl;
+import group3b.service.QuoteService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Set;
 
-import static org.junit.Assert.*;
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@RunWith(SpringRunner.class)
 
 public class QuoteServiceImplTest {
-    private QuoteRepository repository;
+    private QuoteService service;
     private Quote quote;
 
     private Quote getSavedQuote(){
-        Set<Quote> savedQuotes = this.repository.getAll();
+        Set<Quote> savedQuotes = this.service.getAll();
         return savedQuotes.iterator().next();
     }
 
     @Before
     public void setUp() throws Exception{
-        this.repository = QuoteRepositoryImpl.getRepository();
+        this.service = QuoteServiceImpl.getService();
         this.quote = QuoteFactory.getQuote("Test Quote");
     }
 
     @Test
     public void create() {
 
-        Quote testCreate = this.repository.create(this.quote);
+        Quote testCreate = this.service.create(this.quote);
         Assert.assertSame(testCreate, this.quote);
 
     }
@@ -38,14 +43,14 @@ public class QuoteServiceImplTest {
     @Test
     public void delete() {
 
-        int startingSize = this.repository.getAll().size();
+        int startingSize = this.service.getAll().size();
         Quote savedQuote = getSavedQuote();
-        this.repository.delete(savedQuote.getQuoteId());
+        this.service.delete(savedQuote.getQuoteId());
 
-        Assert.assertEquals(startingSize-1,this.repository.getAll().size());
+        Assert.assertEquals(startingSize-1,this.service.getAll().size());
 
         //Create another quote after deleting so that Read() has something to read.
-        this.repository.create(this.quote);
+        this.service.create(this.quote);
 
     }
 
@@ -54,7 +59,7 @@ public class QuoteServiceImplTest {
 
         Quote savedQuote = getSavedQuote();
         String id = savedQuote.getQuoteId();
-        Quote readQuote = this.repository.read(id);
+        Quote readQuote = this.service.read(id);
         Assert.assertEquals(savedQuote, readQuote);
     }
 
@@ -65,16 +70,16 @@ public class QuoteServiceImplTest {
         String id = saved.getQuoteId();
         String newName = "Hello";
         saved.setName(newName);
-        this.repository.update(saved);
+        this.service.update(saved);
 
-        Assert.assertEquals(newName,this.repository.read(id).getName());
+        Assert.assertEquals(newName,this.service.read(id).getName());
 
     }
 
     @Test
     public void getAll() {
 
-        Set<Quote> all = this.repository.getAll();
+        Set<Quote> all = this.service.getAll();
         Assert.assertNotNull(all);
 
     }

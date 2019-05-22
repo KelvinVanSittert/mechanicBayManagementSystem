@@ -22,7 +22,7 @@ public class ToolServiceImpl implements ToolService {
         this.repository = ToolRepositoryImpl.getRepository();
     }
 
-    public ToolService getService(){
+    public static ToolService getService(){
         if (service == null) service = new ToolServiceImpl();
         return service;
     }
